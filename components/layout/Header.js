@@ -49,22 +49,6 @@ const Header = () => {
           >
             <Typography>NEW NEXT APP</Typography>
           </IconButton>
-          <Tabs
-            classes={{
-              root: classes.tabRoot,
-              flexContainer: classes.flexContainer,
-            }}
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="#ffffff"
-          >
-            <Tab onClick={() => handleClick('/')}  label="Home" />
-            <Tab onClick={() => handleClick('/test')}  label="Test" />
-          </Tabs>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>

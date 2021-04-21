@@ -19,3 +19,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+*::placeholder {
+  /* modern browser */
+  color: #BBBDBF;
+}
