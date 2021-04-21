@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
 import Head from "next/head";
+import { shortenURL } from "@./api";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import LinkIcon from "@material-ui/icons/Link";
 import styles from "../styles/Home.module.css";
 
 const useStyles = makeStyles({
@@ -57,6 +57,30 @@ const useStyles = makeStyles({
 const Home = ({ t }) => {
   const classes = useStyles();
   const [userInput, setUserInput] = useState("");
+  const [response, setResponse] = useState("resp");
+  const [buttonText, setButtonText] = useState("Shorten");
+
+  const buttonClick = async () => {
+    if (buttonText === "Copied") {
+      setButtonText("Copy");
+      return;
+    }
+
+    if (response === userInput) {
+      navigator.clipboard.writeText(response)
+      setButtonText("Copied");
+      return;
+    }
+
+    const res = await shortenURL(userInput);
+    if (res.id) {
+      const shortURL = process.env.apiURL + "/" + res.id;
+      setUserInput(shortURL);
+      setResponse(shortURL);
+      setButtonText("Copy");
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -73,12 +97,22 @@ const Home = ({ t }) => {
         <div style={{ display: "flex", width: "100%", height: "60px" }}>
           <input
             value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
+            onChange={(e) => {
+              setUserInput(e.target.value);
+              if (response === e.target.value) setButtonText("Copy");
+              else setButtonText("Shorten");
+            }}
             placeholder="Type or paste your link"
             type="text"
             className={classes.input}
           />
-          <button className={classes.button}>Shorten</button>
+          <button
+            className={classes.button}
+            style={{ backgroundColor: buttonText === "Copied" && "#49ced4" }}
+            onClick={buttonClick}
+          >
+            {buttonText}
+          </button>
         </div>
       </main>
     </div>

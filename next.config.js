@@ -7,4 +7,7 @@ module.exports = {
   publicRuntimeConfig: {
     localeSubpaths,
   },
+  env:{
+    apiURL: "http://localhost:8080"
+  }
 }
