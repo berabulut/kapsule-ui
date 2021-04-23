@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     fontSize: "1.25rem",
     fontWeight: "450",
     fontFamily: "Roboto",
-    color: "#00ADB5",
+    color: "#808080",
   },
   button: {
     flexGrow: 1,
