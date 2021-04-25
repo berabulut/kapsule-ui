@@ -74,7 +74,7 @@ const Home = ({ t }) => {
 
     const res = await shortenURL(userInput);
     if (res.id) {
-      const shortURL = process.env.apiURL + "/" + res.id;
+      const shortURL = process.env.redirectingURL + "/" + res.id;
       setUserInput(shortURL);
       setResponse(shortURL);
       setButtonText("Copy");

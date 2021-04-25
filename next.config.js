@@ -8,6 +8,7 @@ module.exports = {
     localeSubpaths,
   },
   env:{
-    apiURL: "http://localhost:8080"
+    apiURL: "http://localhost/api", // "http://localhost:8080"
+    redirectingURL: "http://localhost/short" // "http://localhost:8081"
   }
 }
