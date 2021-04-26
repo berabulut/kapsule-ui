@@ -4,6 +4,7 @@ import Head from "next/head";
 import { shortenURL } from "@./api";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import LinkCard from "@/components/LinkCard";
 import styles from "../styles/Home.module.css";
 
 const useStyles = makeStyles({
@@ -48,9 +49,18 @@ const useStyles = makeStyles({
     fontWeight: "450",
     transition: "0.3s",
     "&:hover": {
-      backgroundColor: "#11888e",
+      backgroundColor: "#00D1DB",
       cursor: "pointer",
     },
+  },
+  infoText: {
+    fontSize: "0.835rem",
+    fontWeight: "400",
+    fontFamily: "Open Sans"
+  },
+  linksContainer: {
+    marginTop: "24px",
+    width: "100%"
   },
 });
 
@@ -67,7 +77,7 @@ const Home = ({ t }) => {
     }
 
     if (response === userInput) {
-      navigator.clipboard.writeText(response)
+      navigator.clipboard.writeText(response);
       setButtonText("Copied");
       return;
     }
@@ -89,10 +99,10 @@ const Home = ({ t }) => {
       </Head>
       <main className={styles.main}>
         <Typography className={classes.mainText} variant="h1" component="h2">
-          Shorten Any Link
+          {t("title")}
         </Typography>
         <Typography className={classes.subText} variant="h3">
-          Track each shortened link in real-time and measure its performance.
+          {t("subTitle")}
         </Typography>
         <div style={{ display: "flex", width: "100%", height: "60px" }}>
           <input
@@ -113,6 +123,15 @@ const Home = ({ t }) => {
           >
             {buttonText}
           </button>
+        </div>
+        <div style={{marginTop: "4px"}}>
+          <p className={classes.infoText}>
+            By using our service you accept the Terms of service and Privacy.
+          </p>
+        </div>
+        <div className={classes.linksContainer}>
+          <LinkCard />
+          <LinkCard />
         </div>
       </main>
     </div>
