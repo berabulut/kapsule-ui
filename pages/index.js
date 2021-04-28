@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
 import Head from "next/head";
+import Cookies from "cookies";
+import cookieCutter from "cookie-cutter";
 import { shortenURL } from "@./api";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -49,26 +51,27 @@ const useStyles = makeStyles({
     fontWeight: "450",
     transition: "0.3s",
     "&:hover": {
-      backgroundColor: "#00D1DB",
+      backgroundColor: "#00797E",
       cursor: "pointer",
     },
   },
   infoText: {
     fontSize: "0.835rem",
     fontWeight: "400",
-    fontFamily: "Open Sans"
+    fontFamily: "Open Sans",
   },
   linksContainer: {
     marginTop: "24px",
-    width: "100%"
+    width: "100%",
   },
 });
 
-const Home = ({ t }) => {
+const Home = ({ t, links }) => {
   const classes = useStyles();
   const [userInput, setUserInput] = useState("");
   const [response, setResponse] = useState("resp");
   const [buttonText, setButtonText] = useState("Shorten");
+  const [records, setRecords] = useState([]);
 
   const buttonClick = async () => {
     if (buttonText === "Copied") {
@@ -83,19 +86,56 @@ const Home = ({ t }) => {
     }
 
     const res = await shortenURL(userInput);
+
+    const link = {
+      key: res.id,
+      value: userInput,
+      clicks: 0,
+      created_at: new Date(),
+      visits: [],
+    };
+
     if (res.id) {
       const shortURL = process.env.redirectingURL + "/" + res.id;
       setUserInput(shortURL);
       setResponse(shortURL);
       setButtonText("Copy");
+
+      if (!links) {
+        links = [link, undefined, undefined];
+        cookieCutter.set("links", JSON.stringify(links));
+        setRecords(links);
+        return;
+      }
+
+      if (links[2] != undefined) {
+        links[2] = links[1];
+        links[1] = links[0];
+        links[0] = link;
+        cookieCutter.set("links", JSON.stringify(links));
+        setRecords(links);
+        return;
+      }
+
+      links[1] = links[0];
+      links[0] = links;
+      cookieCutter.set("links", JSON.stringify(links));
+      setRecords(links);
     }
   };
+
+  useEffect(() => {
+    if (links != undefined) {
+      console.log(links);
+      setRecords(links);
+    }
+  }, [links]);
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Kapsule</title>
+        <link rel="shortcut icon" href="/static/icons/logo.ico" />
       </Head>
       <main className={styles.main}>
         <Typography className={classes.mainText} variant="h1" component="h2">
@@ -118,28 +158,45 @@ const Home = ({ t }) => {
           />
           <button
             className={classes.button}
-            style={{ backgroundColor: buttonText === "Copied" && "#49ced4" }}
+            style={{ backgroundColor: buttonText === "Copied" && "#00D1DB" }}
             onClick={buttonClick}
           >
             {buttonText}
           </button>
         </div>
-        <div style={{marginTop: "4px"}}>
+        <div style={{ marginTop: "4px" }}>
           <p className={classes.infoText}>
             By using our service you accept the Terms of service and Privacy.
           </p>
         </div>
         <div className={classes.linksContainer}>
-          <LinkCard />
-          <LinkCard />
+          {records &&
+            records.length > 0 &&
+            records.map((record, index) => {
+              if (record != null) {
+                return <LinkCard index={index} record={record} />;
+              }
+            })}
         </div>
       </main>
     </div>
   );
 };
 
-Home.getInitialProps = async () => ({
-  namespacesRequired: ["common", "footer"],
-});
+// Home.getInitialProps = async () => ({
+//   namespacesRequired: ["common", "footer"],
+// });
+
+Home.getInitialProps = async ({ req, res }) => {
+  // Create a cookies instance
+  const cookies = new Cookies(req, res);
+
+  const links = cookies.get("links");
+
+  return {
+    namespacesRequired: ["common", "footer"],
+    links: links ? JSON.parse(decodeURIComponent(links)) : undefined,
+  };
+};
 
 export default withTranslation("common")(Home);

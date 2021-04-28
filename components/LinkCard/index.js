@@ -51,11 +51,11 @@ const useStyles = makeStyles({
   button: {
     textTransform: "none",
     color: "white",
-    height: "42px"
+    height: "42px",
   },
 });
 
-const LinkCard = () => {
+const LinkCard = ({ record }) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -65,20 +65,20 @@ const LinkCard = () => {
             URL Shortener - Szukaj w Google
           </Typography>
         </Grid>
-        <Grid item style={{display: "flex", alignItems:"center"}}>
+        <Grid item style={{ display: "flex", alignItems: "center" }}>
           <Typography variant="body2" component="p" className={classes.date}>
             2021-04-26
           </Typography>
         </Grid>
         <Grid item xs={12} style={{ marginTop: "4px" }}>
-          <Link href="/">
+          <Link href={"/" + record.value}>
             <a>
               <Typography
                 variant="body2"
                 component="p"
                 className={classes.link}
               >
-                https://github.com/berabulut
+                {record.value}
               </Typography>
             </a>
           </Link>
@@ -86,14 +86,14 @@ const LinkCard = () => {
         <Divider className={classes.divider} />
         <Grid item style={{ flexGrow: "1" }}>
           <Grid item xs={12}>
-            <Link href="/">
+            <Link href={process.env.redirectingURL + "/" + record.key}>
               <a>
                 <Typography
                   variant="body2"
                   component="p"
                   className={classes.shortLink}
                 >
-                  https://github.com/berabulut
+                  {process.env.redirectingURL + "/" + record.key}
                 </Typography>
               </a>
             </Link>
@@ -108,7 +108,7 @@ const LinkCard = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item style={{display: "flex", alignItems:"center"}}>
+        <Grid item style={{ display: "flex", alignItems: "center" }}>
           <Button
             variant="contained"
             color="primary"
