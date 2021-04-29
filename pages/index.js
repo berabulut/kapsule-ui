@@ -92,7 +92,7 @@ const Home = ({ t, links }) => {
       Value: userInput,
       Clicks: 0,
       CreatedAt: new Date().getTime(),
-      Visits: [],
+      Title: res.title
     };
 
     if (res.id) {

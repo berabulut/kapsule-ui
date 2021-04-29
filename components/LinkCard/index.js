@@ -62,7 +62,11 @@ const LinkCard = ({ record }) => {
 
   useEffect(() => {
     if(record.CreatedAt) {
-      setDate(new Date(record.CreatedAt * 1000).toLocaleDateString()) 
+      if(record.CreatedAt.toString().length > 10) {
+        setDate(new Date(record.CreatedAt).toLocaleDateString())
+        return 
+      }
+      setDate(new Date(record.CreatedAt * 1000).toLocaleDateString())
     }
   }, [record.CreatedAt])
 
@@ -71,7 +75,7 @@ const LinkCard = ({ record }) => {
       <Grid container>
         <Grid item style={{ flexGrow: "1" }}>
           <Typography variant="h6" component="p" className={classes.linkTitle}>
-            URL Shortener - Szukaj w Google
+            {record.Title}
           </Typography>
         </Grid>
         <Grid item style={{ display: "flex", alignItems: "center" }}>
