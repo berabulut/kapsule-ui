@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Divider, Button } from "@material-ui/core";
 import AssessmentIcon from "@material-ui/icons/Assessment";
+
 
 const useStyles = makeStyles({
   container: {
@@ -57,6 +58,14 @@ const useStyles = makeStyles({
 
 const LinkCard = ({ record }) => {
   const classes = useStyles();
+  const [date, setDate] = useState();
+
+  useEffect(() => {
+    if(record.CreatedAt) {
+      setDate(new Date(record.CreatedAt * 1000).toLocaleDateString()) 
+    }
+  }, [record.CreatedAt])
+
   return (
     <div className={classes.container}>
       <Grid container>
@@ -67,36 +76,28 @@ const LinkCard = ({ record }) => {
         </Grid>
         <Grid item style={{ display: "flex", alignItems: "center" }}>
           <Typography variant="body2" component="p" className={classes.date}>
-            2021-04-26
+            {date}
           </Typography>
         </Grid>
         <Grid item xs={12} style={{ marginTop: "4px" }}>
-          <Link href={"/" + record.value}>
-            <a>
-              <Typography
-                variant="body2"
-                component="p"
-                className={classes.link}
-              >
-                {record.value}
-              </Typography>
-            </a>
-          </Link>
+          <a href={record.Value} target="_blank" rel="noopener noreferrer">
+            <Typography variant="body2" component="p" className={classes.link}>
+              {record.Value}
+            </Typography>
+          </a>
         </Grid>
         <Divider className={classes.divider} />
         <Grid item style={{ flexGrow: "1" }}>
           <Grid item xs={12}>
-            <Link href={process.env.redirectingURL + "/" + record.key}>
-              <a>
+              <a href={process.env.redirectingURL + "/" + record.Key} target="_blank" rel="noopener noreferrer">
                 <Typography
                   variant="body2"
                   component="p"
                   className={classes.shortLink}
                 >
-                  {process.env.redirectingURL + "/" + record.key}
+                  {process.env.redirectingURL + "/" + record.Key}
                 </Typography>
               </a>
-            </Link>
           </Grid>
           <Grid item>
             <Typography
@@ -104,7 +105,7 @@ const LinkCard = ({ record }) => {
               component="p"
               className={classes.clicks}
             >
-              Clicked 12 times
+              Clicked {record.Clicks} times
             </Typography>
           </Grid>
         </Grid>

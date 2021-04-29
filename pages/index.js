@@ -3,7 +3,7 @@ import { i18n, withTranslation } from "@./i18n";
 import Head from "next/head";
 import Cookies from "cookies";
 import cookieCutter from "cookie-cutter";
-import { shortenURL } from "@./api";
+import { shortenURL, getMultipleRecords } from "@./api";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LinkCard from "@/components/LinkCard";
@@ -88,11 +88,11 @@ const Home = ({ t, links }) => {
     const res = await shortenURL(userInput);
 
     const link = {
-      key: res.id,
-      value: userInput,
-      clicks: 0,
-      created_at: new Date(),
-      visits: [],
+      Key: res.id,
+      Value: userInput,
+      Clicks: 0,
+      CreatedAt: new Date().getTime(),
+      Visits: [],
     };
 
     if (res.id) {
@@ -101,35 +101,50 @@ const Home = ({ t, links }) => {
       setResponse(shortURL);
       setButtonText("Copy");
 
-      if (!links) {
-        links = [link, undefined, undefined];
-        cookieCutter.set("links", JSON.stringify(links));
-        setRecords(links);
+      if (!records.length) {
+        let arr = [link, undefined, undefined];
+        cookieCutter.set("links", JSON.stringify(arr));
+        setRecords(arr);
         return;
       }
 
-      if (links[2] != undefined) {
-        links[2] = links[1];
-        links[1] = links[0];
-        links[0] = link;
-        cookieCutter.set("links", JSON.stringify(links));
-        setRecords(links);
+      if (records.length >= 2) {
+        let arr = [link, records[0], records[1]];
+        cookieCutter.set("links", JSON.stringify(arr));
+        setRecords(arr);
         return;
       }
-
-      links[1] = links[0];
-      links[0] = links;
-      cookieCutter.set("links", JSON.stringify(links));
-      setRecords(links);
+      let arr = [link, records[0], undefined];
+      cookieCutter.set("links", JSON.stringify(arr));
+      setRecords(arr);
     }
   };
 
   useEffect(() => {
-    if (links != undefined) {
-      console.log(links);
+    if (links) {
       setRecords(links);
+      fetchRecords();
     }
-  }, [links]);
+    async function fetchRecords() {
+      let keys = [];
+      if (links) {
+        for (let i = 0; i < links.length; i++) {
+          if (links[i]) {
+            keys.push(`keys[${i}]=${links[i].Key}`);
+          }
+        }
+        if (keys.length) {
+          let params = "?" + keys.join("&");
+          const res = await getMultipleRecords(params);
+          setRecords(res.records);
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(records);
+  }, [records]);
 
   return (
     <div className={styles.container}>
@@ -190,7 +205,6 @@ const Home = ({ t, links }) => {
 Home.getInitialProps = async ({ req, res }) => {
   // Create a cookies instance
   const cookies = new Cookies(req, res);
-
   const links = cookies.get("links");
 
   return {
