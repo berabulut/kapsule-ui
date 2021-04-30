@@ -46,11 +46,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <React.Fragment>
       <Head>
-        <title>My page</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <title>Kapsule</title>
+        <link rel="shortcut icon" href="/static/icons/logo.ico" />
       </Head>
       <ThemeProvider theme={theme}>
         <header>

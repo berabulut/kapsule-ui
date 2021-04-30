@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
-import Head from "next/head";
 import Cookies from "cookies";
 import cookieCutter from "cookie-cutter";
 import { shortenURL, getMultipleRecords } from "@./api";
@@ -36,7 +35,7 @@ const useStyles = makeStyles({
     borderRadius: "0px",
     borderWidth: "0px",
     paddingLeft: "24px",
-    fontSize: "1.25rem",
+    fontSize: "1.15rem",
     fontWeight: "450",
     fontFamily: "Roboto",
     color: "#808080",
@@ -46,6 +45,9 @@ const useStyles = makeStyles({
     backgroundColor: "#00ADB5",
     color: "white",
     border: "0px",
+    borderRadius: "4px",
+    boxShadow:
+      "rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;",
     fontSize: "1.5rem",
     fontFamily: "Roboto",
     fontWeight: "450",
@@ -92,7 +94,7 @@ const Home = ({ t, links }) => {
       Value: userInput,
       Clicks: 0,
       CreatedAt: new Date().getTime(),
-      Title: res.title
+      Title: res.title,
     };
 
     if (res.id) {
@@ -142,16 +144,8 @@ const Home = ({ t, links }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(records);
-  }, [records]);
-
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Kapsule</title>
-        <link rel="shortcut icon" href="/static/icons/logo.ico" />
-      </Head>
       <main className={styles.main}>
         <Typography className={classes.mainText} variant="h1" component="h2">
           {t("title")}
@@ -179,7 +173,7 @@ const Home = ({ t, links }) => {
             {buttonText}
           </button>
         </div>
-        <div style={{ marginTop: "4px" }}>
+        <div style={{ marginTop: "4px", width: "100%", textAlign: "center" }}>
           <p className={classes.infoText}>
             By using our service you accept the Terms of service and Privacy.
           </p>
@@ -198,19 +192,16 @@ const Home = ({ t, links }) => {
   );
 };
 
-// Home.getInitialProps = async () => ({
-//   namespacesRequired: ["common", "footer"],
-// });
-
-Home.getInitialProps = async ({ req, res }) => {
-  // Create a cookies instance
+export async function getServerSideProps({ req, res }) {
   const cookies = new Cookies(req, res);
   const links = cookies.get("links");
 
   return {
-    namespacesRequired: ["common", "footer"],
-    links: links ? JSON.parse(decodeURIComponent(links)) : undefined,
+    props: {
+      namespacesRequired: ["common", "footer"],
+      links: links ? JSON.parse(decodeURIComponent(links)) : undefined,
+    },
   };
-};
+}
 
 export default withTranslation("common")(Home);

@@ -1,13 +1,17 @@
 .container {
+  max-width: 900px;
+  width: 900px;
   min-height: 80vh;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: auto;
 }
 
 .main {
+  width: 100%;
   padding: 5rem 0;
   flex: 1;
   display: flex;

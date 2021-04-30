@@ -12,6 +12,17 @@ export const shortenURL = async (url) => {
   return await res.json();
 };
 
+export const getStats = async (key) => {
+  const res = await fetch(process.env.apiURL + "/" + key, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  return await res.json();
+};
+
 export const getMultipleRecords = async (params) => {
   const res = await fetch(process.env.apiURL + "/details" + params, {
     headers: {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Divider, Button } from "@material-ui/core";
 import AssessmentIcon from "@material-ui/icons/Assessment";
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
     fontSize: "1rem",
   },
   date: {
-    fontSize: "0.825rem",
+    fontSize: "0.875rem",
     fontWeight: "500",
     width: "100px",
     textAlign: "center",
@@ -58,7 +59,12 @@ const useStyles = makeStyles({
 
 const LinkCard = ({ record }) => {
   const classes = useStyles();
+  const router = useRouter()
   const [date, setDate] = useState();
+
+  const handleClick = () => {
+    router.push('/stats/' + record.Key)
+  }
 
   useEffect(() => {
     if(record.CreatedAt) {
@@ -115,6 +121,7 @@ const LinkCard = ({ record }) => {
         </Grid>
         <Grid item style={{ display: "flex", alignItems: "center" }}>
           <Button
+            onClick={handleClick}
             variant="contained"
             color="primary"
             size="large"
