@@ -98,7 +98,7 @@ const Home = ({ t, links }) => {
     };
 
     if (res.id) {
-      const shortURL = process.env.redirectingURL + "/" + res.id;
+      const shortURL = window.location.host + "/" + res.id;
       setUserInput(shortURL);
       setResponse(shortURL);
       setButtonText("Copy");
@@ -199,7 +199,7 @@ export async function getServerSideProps({ req, res }) {
   return {
     props: {
       namespacesRequired: ["common", "footer"],
-      links: links ? JSON.parse(decodeURIComponent(links)) : undefined,
+      links: links ? JSON.parse(decodeURIComponent(links)) : null,
     },
   };
 }

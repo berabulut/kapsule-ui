@@ -105,7 +105,7 @@ const LinkCard = ({ record }) => {
                   component="p"
                   className={classes.shortLink}
                 >
-                  {process.env.redirectingURL + "/" + record.Key}
+                  {window.location.host + "/" + record.Key}
                 </Typography>
               </a>
           </Grid>
