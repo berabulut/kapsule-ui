@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Divider, Button } from "@material-ui/core";
 import AssessmentIcon from "@material-ui/icons/Assessment";
-
+import { parseTimeStamp } from "@./helpers/date";
 
 const useStyles = makeStyles({
   container: {
@@ -59,22 +59,17 @@ const useStyles = makeStyles({
 
 const LinkCard = ({ record }) => {
   const classes = useStyles();
-  const router = useRouter()
+  const router = useRouter();
   const [date, setDate] = useState();
 
   const handleClick = () => {
-    router.push('/stats/' + record.Key)
-  }
+    router.push("/stats/" + record.Key);
+  };
 
   useEffect(() => {
-    if(record.CreatedAt) {
-      if(record.CreatedAt.toString().length > 10) {
-        setDate(new Date(record.CreatedAt).toLocaleDateString())
-        return 
-      }
-      setDate(new Date(record.CreatedAt * 1000).toLocaleDateString())
-    }
-  }, [record.CreatedAt])
+    if (!record.CreatedAt) return;
+    setDate(parseTimeStamp(record.CreatedAt));
+  }, [record.CreatedAt]);
 
   return (
     <div className={classes.container}>
@@ -99,15 +94,19 @@ const LinkCard = ({ record }) => {
         <Divider className={classes.divider} />
         <Grid item style={{ flexGrow: "1" }}>
           <Grid item xs={12}>
-              <a href={process.env.redirectingURL + "/" + record.Key} target="_blank" rel="noopener noreferrer">
-                <Typography
-                  variant="body2"
-                  component="p"
-                  className={classes.shortLink}
-                >
-                  {window.location.host + "/" + record.Key}
-                </Typography>
-              </a>
+            <a
+              href={process.env.redirectingURL + "/" + record.Key}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Typography
+                variant="body2"
+                component="p"
+                className={classes.shortLink}
+              >
+                {window.location.host + "/s/" + record.Key}
+              </Typography>
+            </a>
           </Grid>
           <Grid item>
             <Typography

@@ -8,7 +8,7 @@ import { ResponsiveLine } from "@nivo/line";
 // you'll often use just a few of them.
 const ClicksChart = ({ data }) => {
   return (
-    <div style={{ width: "1000px", height: "400px" }}>
+    <div style={{ width: "100%", height: "400px" }}>
       <ResponsiveLine
         data={data}
         colors={{ scheme: "paired" }}
@@ -30,7 +30,6 @@ const ClicksChart = ({ data }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "transportation",
           legendOffset: 36,
           legendPosition: "middle",
         }}
@@ -42,6 +41,7 @@ const ClicksChart = ({ data }) => {
           legend: "count",
           legendOffset: -40,
           legendPosition: "middle",
+          format: e => Math.floor(e) === e && e
         }}
         pointSize={4}
         pointColor={{ theme: "background" }}
