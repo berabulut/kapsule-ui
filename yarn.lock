@@ -227,10 +227,30 @@
     lodash "^4.17.11"
     react-spring "9.1.2"
 
+"@nivo/arcs@0.69.0":
+  version "0.69.0"
+  resolved "https://registry.yarnpkg.com/@nivo/arcs/-/arcs-0.69.0.tgz#219e164bddf41962bececcbdb7b232d1cc927fee"
+  integrity sha512-ts9JSCGrpbMEV7fsD3RvxJY6U9qeD8OdcTf4lOuaFML58Td0qqAiJ7ozrJ9kwHF9SEv0Nfko/ZxCtKaNv4/epA==
+  dependencies:
+    "@nivo/colors" "0.69.0"
+    d3-shape "^1.3.5"
+    react-spring "9.1.2"
+
 "@nivo/axes@0.69.0":
   version "0.69.0"
   resolved "https://registry.yarnpkg.com/@nivo/axes/-/axes-0.69.0.tgz#6c3893f65df2818c9e85151bcf3ee0b5096792be"
   integrity sha512-WMQF7Z7CDrp6GLs4q+aZ/Rn6+ZzllTdXbi0lceBaEhxRdkc25XCuJUSo7uP+WT15xjcWXHxWgEimga09pjHcfw==
+  dependencies:
+    "@nivo/scales" "0.69.0"
+    d3-format "^1.4.4"
+    d3-time "^1.0.11"
+    d3-time-format "^2.1.3"
+    react-spring "9.1.2"
+
+"@nivo/axes@0.69.1":
+  version "0.69.1"
+  resolved "https://registry.yarnpkg.com/@nivo/axes/-/axes-0.69.1.tgz#ee338b15d04b38727eb8d7ba361f537c3b561c7a"
+  integrity sha512-jVWlhyC7qdMLvajgafSUxiDzbB3TRSTzzkbtpWf9D5EeZ6kc0FYBzoDJU4njkRpFh/JjSU8BaMh6aqpYIFfQ4g==
   dependencies:
     "@nivo/scales" "0.69.0"
     d3-format "^1.4.4"
@@ -291,13 +311,13 @@
   dependencies:
     lodash "^4.17.11"
 
-"@nivo/line@^0.69.0":
-  version "0.69.0"
-  resolved "https://registry.yarnpkg.com/@nivo/line/-/line-0.69.0.tgz#530ac77f2b42545ba3217ca6f9e6ce474a8607bb"
-  integrity sha512-SRrYSqWZaHWO+7TKiQL+SUXIslO7mFSfD27Mwrnis36CknR7Db2b7RTQq9bfBXevmJlW9/yvxcnm7Bmm75zGBw==
+"@nivo/line@^0.69.1":
+  version "0.69.1"
+  resolved "https://registry.yarnpkg.com/@nivo/line/-/line-0.69.1.tgz#08779be6e7a7a2d357607293ac14e026046bc203"
+  integrity sha512-Q92S7tCJCKc+AJdc2PdYKQmzULNoExIJQ0IV6pgFf2rY2PiUUlI7rFb7Eu8xgpsHe0w4Xa/KxMLCLHWXNBGJQw==
   dependencies:
     "@nivo/annotations" "0.69.0"
-    "@nivo/axes" "0.69.0"
+    "@nivo/axes" "0.69.1"
     "@nivo/colors" "0.69.0"
     "@nivo/legends" "0.69.0"
     "@nivo/scales" "0.69.0"
@@ -305,6 +325,17 @@
     "@nivo/voronoi" "0.69.0"
     d3-shape "^1.3.5"
     react-spring "9.1.2"
+
+"@nivo/pie@^0.69.0":
+  version "0.69.0"
+  resolved "https://registry.yarnpkg.com/@nivo/pie/-/pie-0.69.0.tgz#7f5d334bcc5d3b811bcb842caaa394b71aeb46d9"
+  integrity sha512-OmiXLt4bl45bQf0hcbQrQyckZJcQnow0JkbVg/5ZYnGdlbiB1IPqBWFnFpl/tkPqWhWWZZd/sMEmfy3I91hvvQ==
+  dependencies:
+    "@nivo/arcs" "0.69.0"
+    "@nivo/colors" "0.69.0"
+    "@nivo/legends" "0.69.0"
+    "@nivo/tooltip" "0.69.0"
+    d3-shape "^1.3.5"
 
 "@nivo/recompose@0.69.0":
   version "0.69.0"

@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ClicksChart from "@/components/ClicksChart";
+import BrowsersChart from "@/components/BrowsersChart";
 import DetailsCard from "@/components/DetailsCard";
 import styles from "@./styles/Home.module.css";
 import { data } from "@./data";
 import { parseTimeStamp } from "@./helpers/date";
+import { browserStatistics } from "@./helpers/userAgent";
 
 const useStyles = makeStyles({
   mainText: {
@@ -32,6 +34,7 @@ const useStyles = makeStyles({
 const Stats = ({ record }) => {
   const classes = useStyles();
   const [clicksChartData, setClicksChartData] = useState([]);
+  const [browserChartData, setBrowserChartData] = useState([]);
 
   useEffect(() => {
     console.log(record);
@@ -70,6 +73,7 @@ const Stats = ({ record }) => {
     }
 
     setClicksChartData(arr);
+    setBrowserChartData(browserStatistics(record.Visits));
   }, []);
   return (
     <div className={styles.detailsContainer}>
@@ -79,7 +83,7 @@ const Stats = ({ record }) => {
         </Typography>
         <Grid
           container
-          style={{ marginTop: "48px", justifyContent: "space-around" }}
+          style={{ marginTop: "100px", justifyContent: "space-around" }}
         >
           <Grid item xs={10} sm={6}>
             <DetailsCard record={record} />
@@ -99,9 +103,20 @@ const Stats = ({ record }) => {
         </Grid>
         <Grid
           container
-          style={{ marginTop: "48px", justifyContent: "space-around" }}
+          style={{ marginTop: "100px", justifyContent: "space-around" }}
         >
           <ClicksChart data={clicksChartData} />
+        </Grid>
+        <Grid
+          container
+          style={{ marginTop: "100px", justifyContent: "space-around" }}
+        >
+          <Grid item xs={10} sm={5}>
+            <BrowsersChart data={browserChartData} />
+          </Grid>
+          <Grid item xs={10} sm={5}>
+            <BrowsersChart data={browserChartData} />
+          </Grid>
         </Grid>
       </main>
     </div>
