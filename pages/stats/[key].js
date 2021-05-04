@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ClicksChart from "@/components/ClicksChart";
-import BrowsersChart from "@/components/BrowsersChart";
+import PieChart from "@/components/PieChart";
 import DetailsCard from "@/components/DetailsCard";
 import styles from "@./styles/Home.module.css";
-import { data } from "@./data";
 import { parseTimeStamp } from "@./helpers/date";
-import { browserStatistics } from "@./helpers/userAgent";
+import {
+  browserStatistics,
+  deviceStatistics,
+  osStatistics,
+  languageStatistics,
+} from "@./helpers/userAgent";
 
 const useStyles = makeStyles({
   mainText: {
@@ -29,12 +33,19 @@ const useStyles = makeStyles({
     fontSize: "6rem",
     fontWeight: "400",
   },
+  chartWrapper: {
+    boxShadow:
+      "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
+  },
 });
 
 const Stats = ({ record }) => {
   const classes = useStyles();
   const [clicksChartData, setClicksChartData] = useState([]);
+  const [devicesChartData, setDevicesChartData] = useState([]);
   const [browserChartData, setBrowserChartData] = useState([]);
+  const [osChartData, setOSChartData] = useState([]);
+  const [languagesChartData, setLanguagesChartData] = useState([]);
 
   useEffect(() => {
     console.log(record);
@@ -74,6 +85,9 @@ const Stats = ({ record }) => {
 
     setClicksChartData(arr);
     setBrowserChartData(browserStatistics(record.Visits));
+    setDevicesChartData(deviceStatistics(record.Visits));
+    setOSChartData(osStatistics(record.Visits));
+    setLanguagesChartData(languageStatistics(record.Visits));
   }, []);
   return (
     <div className={styles.detailsContainer}>
@@ -88,7 +102,7 @@ const Stats = ({ record }) => {
           <Grid item xs={10} sm={6}>
             <DetailsCard record={record} />
           </Grid>
-          <Grid item xs={10} sm={4}>
+          <Grid item xs={10} sm={4} className={classes.chartWrapper}>
             <Typography
               className={classes.clicksText}
               variant="h3"
@@ -104,6 +118,7 @@ const Stats = ({ record }) => {
         <Grid
           container
           style={{ marginTop: "100px", justifyContent: "space-around" }}
+          className={classes.chartWrapper}
         >
           <ClicksChart data={clicksChartData} />
         </Grid>
@@ -111,11 +126,61 @@ const Stats = ({ record }) => {
           container
           style={{ marginTop: "100px", justifyContent: "space-around" }}
         >
-          <Grid item xs={10} sm={5}>
-            <BrowsersChart data={browserChartData} />
+          <Grid
+            item
+            xs={10}
+            sm={5}
+            className={classes.chartWrapper}
+            style={{ paddingLeft: "8px" }}
+          >
+            <PieChart data={osChartData} innerRadius={0} colors="category10" />
           </Grid>
-          <Grid item xs={10} sm={5}>
-            <BrowsersChart data={browserChartData} />
+
+          <Grid
+            item
+            xs={10}
+            sm={5}
+            className={classes.chartWrapper}
+            style={{ paddingLeft: "8px" }}
+          >
+            <PieChart
+              data={devicesChartData}
+              innerRadius={0}
+              colors="accent"
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          style={{ marginTop: "100px", justifyContent: "space-around" }}
+        >
+          <Grid
+            item
+            xs={10}
+            sm={5}
+            className={classes.chartWrapper}
+            style={{ paddingLeft: "8px" }}
+          >
+            <PieChart
+              data={browserChartData}
+              innerRadius={0.7}
+              padAngle={3}
+              colors="set1"
+            />
+          </Grid>
+          <Grid
+            item
+            xs={10}
+            sm={5}
+            className={classes.chartWrapper}
+            style={{ paddingLeft: "8px" }}
+          >
+            <PieChart
+              data={languagesChartData}
+              innerRadius={0.7}
+              padAngle={3}
+              colors="dark2"
+            />
           </Grid>
         </Grid>
       </main>

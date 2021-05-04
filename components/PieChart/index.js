@@ -1,20 +1,14 @@
-// install (please make sure versions match peerDependencies)
-// yarn add @nivo/core @nivo/line
 import { ResponsivePie } from "@nivo/pie";
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-const BrowsersChart = ({ data }) => {
+
+const PieChart = ({ data, colors, innerRadius, padAngle }) => {
   return (
     <div style={{ width: "100%", height: "400px" }}>
       <ResponsivePie
         data={data}
-        colors={{ scheme: "pastel1" }}
+        colors={{ scheme: colors }}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-        innerRadius={0.5}
-        padAngle={0.7}
+        innerRadius={innerRadius}
+        padAngle={padAngle ? padAngle : 0.7}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
         borderWidth={1}
@@ -24,7 +18,9 @@ const BrowsersChart = ({ data }) => {
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: "color" }}
         arcLabelsSkipAngle={10}
-        arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
+
+        arcLabelsTextColor="#ffffff"
+        motionConfig="slow"
         defs={[
           {
             id: "dots",
@@ -68,11 +64,11 @@ const BrowsersChart = ({ data }) => {
                 },
               },
             ],
-          }
+          },
         ]}
       />
     </div>
   );
 };
 
-export default BrowsersChart;
+export default PieChart;

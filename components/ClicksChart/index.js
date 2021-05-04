@@ -1,11 +1,5 @@
-// install (please make sure versions match peerDependencies)
-// yarn add @nivo/core @nivo/line
 import { ResponsiveLine } from "@nivo/line";
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
+
 const ClicksChart = ({ data }) => {
   return (
     <div style={{ width: "100%", height: "400px" }}>
@@ -41,7 +35,7 @@ const ClicksChart = ({ data }) => {
           legend: "count",
           legendOffset: -40,
           legendPosition: "middle",
-          format: e => Math.floor(e) === e && e
+          format: (e) => Math.floor(e) === e && e,
         }}
         pointSize={4}
         pointColor={{ theme: "background" }}

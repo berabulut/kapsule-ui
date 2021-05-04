@@ -1,20 +1,42 @@
 export const data = [
   {
-    id: "clicks",
-    color: "rgb(0, 173, 181)",
-    data: [
-      {
-        x: "plane",
-        y: 212,
-      },
-      {
-        x: "helicopter",
-        y: 268,
-      },
-      {
-        x: "boat",
-        y: 66,
-      },
-    ],
+    statement: "it's good",
+    participation: 4,
+    stronglyAgree: 9,
+    agree: 14,
+    disagree: 32,
+    stronglyDisagree: 21,
+  },
+  {
+    statement: "it's sweet",
+    participation: 22,
+    stronglyAgree: 7,
+    agree: 7,
+    disagree: 15,
+    stronglyDisagree: 7,
+  },
+  {
+    statement: "it's spicy",
+    participation: 27,
+    stronglyAgree: 13,
+    agree: 14,
+    disagree: 8,
+    stronglyDisagree: 19,
+  },
+  {
+    statement: "worth eating",
+    participation: 17,
+    stronglyAgree: 19,
+    agree: 28,
+    disagree: 28,
+    stronglyDisagree: 18,
+  },
+  {
+    statement: "worth buying",
+    participation: 20,
+    stronglyAgree: 30,
+    agree: 17,
+    disagree: 4,
+    stronglyDisagree: 0,
   },
 ];
