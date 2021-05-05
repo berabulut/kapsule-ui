@@ -15,7 +15,7 @@ export const shortenURL = async (url) => {
 export const getStats = async (key) => {
   let url;
   if (process.env.prod) {
-    url = window.location.host + process.env.apiURL + "/" + key
+    url = window.location.origin + process.env.apiURL + "/" + key
   }
   url = process.env.apiURL + "/" + key
   

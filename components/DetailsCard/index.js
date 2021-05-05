@@ -47,7 +47,7 @@ const DetailsCard = ({ record }) => {
     if (!record.Key) return;
     if (process.env.prod) {
       setShortLink(
-        window.location.host +
+        window.location.origin +
           "/" +
           process.env.redirectingURL +
           "/" +

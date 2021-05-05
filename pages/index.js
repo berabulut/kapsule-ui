@@ -101,7 +101,7 @@ const Home = ({ t, links }) => {
       let shortURL;
       if (process.env.prod) {
         shortURL =
-          window.location.host +
+          window.location.origin +
           "/" +
           process.env.redirectingURL +
           "/" +

@@ -12,6 +12,6 @@ module.exports = {
   env:{
     prod: PROD,
     apiURL: PROD ? "/api" : "http://localhost:8080", //,  
-    redirectingURL: PROD ? "/s" : "http://localhost:8081" //
+    redirectingURL: PROD ? "s" : "http://localhost:8081" //
   }
 }
