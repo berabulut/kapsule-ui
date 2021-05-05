@@ -135,10 +135,7 @@ export const languageStatistics = (visits) => {
     const languages = visits[i].Language;
     if (languages === null) continue;
     for (let j = 0; j < languages.length; j++) {
-      const language = languages[j].substr(
-        languages[j].indexOf("-") + 1,
-        languages[j].length
-      );
+      const language = languages[j].substr(0, languages[j].indexOf("-")).toUpperCase();
       const index = arr.findIndex((record) => record.id === language); // index is -1 if previous browser record has not been found
       if (index > -1) {
         arr[index].value += 1;

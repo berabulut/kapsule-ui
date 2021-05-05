@@ -11,7 +11,7 @@ const ClicksChart = ({ data }) => {
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
-          min: "auto",
+          min: "0",
           max: "auto",
           stacked: true,
           reverse: false,
@@ -28,6 +28,7 @@ const ClicksChart = ({ data }) => {
           legendPosition: "middle",
         }}
         axisLeft={{
+          tickValues: 10,
           orient: "left",
           tickSize: 5,
           tickPadding: 5,

@@ -61,6 +61,7 @@ const LinkCard = ({ record }) => {
   const classes = useStyles();
   const router = useRouter();
   const [date, setDate] = useState();
+  const [shortLink, setShortLink] = useState("");
 
   const handleClick = () => {
     router.push("/stats/" + record.Key);
@@ -70,6 +71,21 @@ const LinkCard = ({ record }) => {
     if (!record.CreatedAt) return;
     setDate(parseTimeStamp(record.CreatedAt));
   }, [record.CreatedAt]);
+
+  useEffect(() => {
+    if (!record.Key) return;
+    if (process.env.prod) {
+      setShortLink(
+        window.location.host +
+          "/" +
+          process.env.redirectingURL +
+          "/" +
+          record.Key
+      );
+      return;
+    }
+    setShortLink(process.env.redirectingURL + "/" + record.Key);
+  }, [record.Key]);
 
   return (
     <div className={classes.container}>
@@ -94,17 +110,13 @@ const LinkCard = ({ record }) => {
         <Divider className={classes.divider} />
         <Grid item style={{ flexGrow: "1" }}>
           <Grid item xs={12}>
-            <a
-              href={process.env.redirectingURL + "/" + record.Key}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={shortLink} target="_blank" rel="noopener noreferrer">
               <Typography
                 variant="body2"
                 component="p"
                 className={classes.shortLink}
               >
-                {window.location.host + "/s/" + record.Key}
+                {shortLink}
               </Typography>
             </a>
           </Grid>

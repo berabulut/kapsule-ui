@@ -98,7 +98,15 @@ const Home = ({ t, links }) => {
     };
 
     if (res.id) {
-      const shortURL = window.location.host + "/" + res.id;
+      let shortURL;
+      if (process.env.prod) {
+        shortURL =
+          window.location.host +
+          "/" +
+          process.env.redirectingURL +
+          "/" +
+          res.id;
+      } else shortURL = process.env.redirectingURL + "/" + res.id;
       setUserInput(shortURL);
       setResponse(shortURL);
       setButtonText("Copy");

@@ -15,12 +15,12 @@ const useStyles = makeStyles({
   },
   fieldTitle: {
     color: "#808080",
-    fontSize: "0.95rem",
+    fontSize: "1.05rem",
     marginBottom: "4px",
   },
   strong: {
     color: "#222831",
-    fontSize: "1rem",
+    fontSize: "1.15rem",
   },
 });
 
@@ -28,6 +28,7 @@ const DetailsCard = ({ record }) => {
   const classes = useStyles();
   const [date, setDate] = useState();
   const [lastVisit, setLastVisit] = useState();
+  const [shortLink, setShortLink] = useState();
 
   useEffect(() => {
     if (!record.CreatedAt) return;
@@ -42,6 +43,21 @@ const DetailsCard = ({ record }) => {
     setLastVisit([cal, time]);
   }, [record.LastTimeVisited]);
 
+  useEffect(() => {
+    if (!record.Key) return;
+    if (process.env.prod) {
+      setShortLink(
+        window.location.host +
+          "/" +
+          process.env.redirectingURL +
+          "/" +
+          record.Key
+      );
+      return;
+    }
+    setShortLink(process.env.redirectingURL + "/" + record.Key);
+  }, [record.Key]);
+
   return (
     <div className={classes.container}>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
@@ -50,11 +66,15 @@ const DetailsCard = ({ record }) => {
       </Typography>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
         <strong className={classes.strong}>Link : </strong>
-        {record.Value}
+        <a href={record.Value} target="_blank" rel="noopener noreferrer">
+          {record.Value}
+        </a>
       </Typography>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
         <strong className={classes.strong}>Shortened Link : </strong>
-        {record.Key}
+        <a href={shortLink} target="_blank" rel="noopener noreferrer">
+          {shortLink}
+        </a>
       </Typography>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
         <strong className={classes.strong}>Created At : </strong>

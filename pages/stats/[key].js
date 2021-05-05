@@ -37,6 +37,12 @@ const useStyles = makeStyles({
     boxShadow:
       "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
   },
+  sectionTitle: {
+    fontWeight: "600",
+    fontSize: "2.5rem",
+    marginTop: "28px",
+    textAlign: "center",
+  },
 });
 
 const Stats = ({ record }) => {
@@ -89,6 +95,7 @@ const Stats = ({ record }) => {
     setOSChartData(osStatistics(record.Visits));
     setLanguagesChartData(languageStatistics(record.Visits));
   }, []);
+
   return (
     <div className={styles.detailsContainer}>
       <main className={styles.main} style={{ paddingTop: "0px" }}>
@@ -120,6 +127,9 @@ const Stats = ({ record }) => {
           style={{ marginTop: "100px", justifyContent: "space-around" }}
           className={classes.chartWrapper}
         >
+          <Typography variant="h3" className={classes.sectionTitle}>
+            History
+          </Typography>
           <ClicksChart data={clicksChartData} />
         </Grid>
         <Grid
@@ -133,6 +143,9 @@ const Stats = ({ record }) => {
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >
+            <Typography variant="h3" className={classes.sectionTitle}>
+              OS
+            </Typography>
             <PieChart data={osChartData} innerRadius={0} colors="category10" />
           </Grid>
 
@@ -143,11 +156,10 @@ const Stats = ({ record }) => {
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >
-            <PieChart
-              data={devicesChartData}
-              innerRadius={0}
-              colors="accent"
-            />
+            <Typography variant="h3" className={classes.sectionTitle}>
+              Devices
+            </Typography>
+            <PieChart data={devicesChartData} innerRadius={0} colors="accent" />
           </Grid>
         </Grid>
         <Grid
@@ -161,6 +173,9 @@ const Stats = ({ record }) => {
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >
+            <Typography variant="h3" className={classes.sectionTitle}>
+              Browsers
+            </Typography>
             <PieChart
               data={browserChartData}
               innerRadius={0.7}
@@ -175,6 +190,9 @@ const Stats = ({ record }) => {
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >
+            <Typography variant="h3" className={classes.sectionTitle}>
+              Languages
+            </Typography>
             <PieChart
               data={languagesChartData}
               innerRadius={0.7}
