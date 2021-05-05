@@ -13,7 +13,13 @@ export const shortenURL = async (url) => {
 };
 
 export const getStats = async (key) => {
-  const res = await fetch(process.env.apiURL + "/" + key, { //http://kapsule.click
+  let url;
+  if (process.env.prod) {
+    url = window.location.host + process.env.apiURL + "/" + key
+  }
+  url = process.env.apiURL + "/" + key
+  
+  const res = await fetch(url, { //http://kapsule.click
     headers: {
       "Content-Type": "application/json",
     },

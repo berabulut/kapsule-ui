@@ -111,14 +111,14 @@ const Home = ({ t, links }) => {
       setResponse(shortURL);
       setButtonText("Copy");
 
-      if (!records.length) {
+      if (!records?.length) {
         let arr = [link, undefined, undefined];
         cookieCutter.set("links", JSON.stringify(arr));
         setRecords(arr);
         return;
       }
 
-      if (records.length >= 2) {
+      if (records?.length >= 2) {
         let arr = [link, records[0], records[1]];
         cookieCutter.set("links", JSON.stringify(arr));
         setRecords(arr);
