@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
 import Cookies from "cookies";
-import cookieCutter from "cookie-cutter";
+import JSCookies from 'js-cookie'
 import { shortenURL, getMultipleRecords } from "@./api";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -113,19 +113,19 @@ const Home = ({ t, links }) => {
 
       if (!records?.length) {
         let arr = [link, undefined, undefined];
-        cookieCutter.set("links", JSON.stringify(arr));
+        JSCookies.set("links", JSON.stringify(arr), { expires: 365 });
         setRecords(arr);
         return;
       }
 
       if (records?.length >= 2) {
         let arr = [link, records[0], records[1]];
-        cookieCutter.set("links", JSON.stringify(arr));
+        JSCookies.set("links", JSON.stringify(arr), { expires: 365 });
         setRecords(arr);
         return;
       }
       let arr = [link, records[0], undefined];
-      cookieCutter.set("links", JSON.stringify(arr));
+      JSCookies.set("links", JSON.stringify(arr), { expires: 365 });
       setRecords(arr);
     }
   };
