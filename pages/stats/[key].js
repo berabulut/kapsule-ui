@@ -206,11 +206,17 @@ const Stats = ({ record }) => {
   );
 };
 
-export async function getServerSideProps({ query }) {
+Stats.getInitialProps = async ({ query }) => {
   const res = await getStats(query.key);
   const record = res.record;
+  return { record: record };
+};
 
-  return { props: { record } };
-}
+// export async function getServerSideProps({ query }) {
+//   const res = await getStats(query.key);
+//   const record = res.record;
+
+//   return { props: { record } };
+// }
 
 export default Stats;
