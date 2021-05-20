@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
-import Cookies from "cookies";
-import JSCookies from 'js-cookie'
-import { shortenURL, getMultipleRecords } from "@./api";
-import { Typography } from "@material-ui/core";
+import { Typography, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { shortenURL, getMultipleRecords } from "@./api";
 import LinkCard from "@/components/LinkCard";
+import Alert from "@/components/Alert";
 import styles from "../styles/Home.module.css";
+import Cookies from "cookies";
+import JSCookies from "js-cookie";
 
 const useStyles = makeStyles({
   mainText: {
@@ -74,8 +75,16 @@ const Home = ({ t, links }) => {
   const [response, setResponse] = useState("resp");
   const [buttonText, setButtonText] = useState("Shorten");
   const [records, setRecords] = useState([]);
+  const [openError, setOpenError] = useState(false);
+  const [alert, setAlert] = useState({});
 
   const buttonClick = async () => {
+    if (!userInput.length > 0) {
+      setAlert({ type: "warning", text: t("emptyError") });
+      setOpenError(true);
+      return;
+    }
+
     if (buttonText === "Copied") {
       setButtonText("Copy");
       return;
@@ -88,6 +97,12 @@ const Home = ({ t, links }) => {
     }
 
     const res = await shortenURL(userInput);
+
+    if (res?.error) {
+      setAlert({ type: "error", text: res.text });
+      setOpenError(true);
+      return;
+    }
 
     const link = {
       Key: res.id,
@@ -128,6 +143,14 @@ const Home = ({ t, links }) => {
       JSCookies.set("links", JSON.stringify(arr), { expires: 365 });
       setRecords(arr);
     }
+  };
+
+  const closeError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenError(false);
   };
 
   useEffect(() => {
@@ -195,6 +218,11 @@ const Home = ({ t, links }) => {
               }
             })}
         </div>
+        <Snackbar open={openError} autoHideDuration={4000} onClose={closeError}>
+          <Alert onClose={closeError} severity={alert.type}>
+            {alert.text}
+          </Alert>
+        </Snackbar>
       </main>
     </div>
   );
