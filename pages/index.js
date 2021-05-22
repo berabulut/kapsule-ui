@@ -99,7 +99,7 @@ const Home = ({ t, links }) => {
     const res = await shortenURL(userInput);
 
     if (res?.error) {
-      setAlert({ type: "error", text: res.text });
+      setAlert({ type: "error", text: res.error + " " + res.text });
       setOpenError(true);
       return;
     }

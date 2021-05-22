@@ -9,8 +9,7 @@ export const shortenURL = async (url) => {
     method: "POST",
   });
 
-  const status = res.status.toString();
-  if (status[0] !== "2") return { error: res, text: res.statusText };
+  if (!res.ok) return { error: res.status, text: res.statusText };
 
   return await res.json();
 };
