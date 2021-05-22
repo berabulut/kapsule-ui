@@ -10,13 +10,13 @@ export const shortenURL = async (url) => {
   });
 
   const status = res.status.toString();
-  if (status[0] !== "2") return { error: res , text: res.statusText};
+  if (status[0] !== "2") return { error: res, text: res.statusText };
 
   return await res.json();
 };
 
-export const getStats = async (key) => {
-  const res = await fetch(process.env.apiURL + "/" + key, {
+export const getStats = async (url) => {
+  const res = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
     },

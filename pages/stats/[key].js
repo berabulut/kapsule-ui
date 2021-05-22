@@ -54,7 +54,6 @@ const Stats = ({ record }) => {
   const [languagesChartData, setLanguagesChartData] = useState([]);
 
   useEffect(() => {
-    console.log(record);
     if (!record) return;
     if (!record.Visits) return;
 
@@ -95,6 +94,14 @@ const Stats = ({ record }) => {
     setOSChartData(osStatistics(record.Visits));
     setLanguagesChartData(languageStatistics(record.Visits));
   }, []);
+
+  if (!record) {
+    return (
+      <div>
+        <h1>SOMETHING IS WRONG</h1>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.detailsContainer}>
@@ -206,17 +213,19 @@ const Stats = ({ record }) => {
   );
 };
 
-Stats.getInitialProps = async ({ query }) => {
-  const res = await getStats(query.key);
-  const record = res.record;
-  return { record: record };
-};
-
-// export async function getServerSideProps({ query }) {
-//   const res = await getStats(query.key);
-//   const record = res.record;
-
-//   return { props: { record } };
-// }
+export async function getServerSideProps({ query }) {
+  try {
+    let url;
+    if (typeof window === "undefined") {
+      url = process.env.serverApiUrl + "/" + query.key;
+    }
+    url = process.env.apiURL + "/" + query.key;
+    const res = await getStats(url);
+    const record = res.record;
+    return { props: { record } };
+  } catch (err) {
+    return { props: {} };
+  }
+}
 
 export default Stats;
