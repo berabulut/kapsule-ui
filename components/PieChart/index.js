@@ -9,9 +9,9 @@ const PieChart = ({ data, colors, innerRadius, padAngle }) => {
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={innerRadius}
         padAngle={padAngle ? padAngle : 0.7}
-        cornerRadius={3}
+        cornerRadius={10}
         activeOuterRadiusOffset={8}
-        borderWidth={1}
+        borderWidth={4}
         borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#333333"

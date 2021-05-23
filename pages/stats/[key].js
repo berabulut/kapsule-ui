@@ -4,6 +4,7 @@ import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ClicksChart from "@/components/ClicksChart";
 import PieChart from "@/components/PieChart";
+import MapChart from "@/components/MapChart";
 import DetailsCard from "@/components/DetailsCard";
 import styles from "@./styles/Home.module.css";
 import { parseTimeStamp } from "@./helpers/date";
@@ -13,6 +14,7 @@ import {
   osStatistics,
   languageStatistics,
 } from "@./helpers/userAgent";
+import { mapStatistics } from "@./helpers/map";
 
 const useStyles = makeStyles({
   mainText: {
@@ -39,7 +41,7 @@ const useStyles = makeStyles({
   },
   sectionTitle: {
     fontWeight: "600",
-    fontSize: "2.5rem",
+    fontSize: "2.25rem",
     marginTop: "28px",
     textAlign: "center",
   },
@@ -52,10 +54,12 @@ const Stats = ({ record }) => {
   const [browserChartData, setBrowserChartData] = useState([]);
   const [osChartData, setOSChartData] = useState([]);
   const [languagesChartData, setLanguagesChartData] = useState([]);
+  const [mapData, setMapData] = useState([]);
 
   useEffect(() => {
     if (!record) return;
     if (!record.Visits) return;
+    console.log(record);
 
     let arr = [
       {
@@ -93,6 +97,7 @@ const Stats = ({ record }) => {
     setDevicesChartData(deviceStatistics(record.Visits));
     setOSChartData(osStatistics(record.Visits));
     setLanguagesChartData(languageStatistics(record.Visits));
+    setMapData(mapStatistics(record.Visits));
   }, []);
 
   if (!record) {
@@ -187,7 +192,7 @@ const Stats = ({ record }) => {
               data={browserChartData}
               innerRadius={0.7}
               padAngle={3}
-              colors="set1"
+              colors="set2"
             />
           </Grid>
           <Grid
@@ -206,6 +211,20 @@ const Stats = ({ record }) => {
               padAngle={3}
               colors="dark2"
             />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          style={{ marginTop: "100px" }}
+          className={classes.chartWrapper}
+        >
+          <Grid item xs={12}>
+            <Typography variant="h3" className={classes.sectionTitle}>
+              Geo Location
+            </Typography>
+          </Grid>
+          <Grid item xs={10} sm={8} style={{marginTop: "24px", marginBottom: "48px"}}>
+            <MapChart data={mapData} domain={[0, Math.ceil(record.Clicks)]} />
           </Grid>
         </Grid>
       </main>
