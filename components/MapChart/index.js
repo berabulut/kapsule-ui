@@ -1,7 +1,7 @@
 import { ResponsiveChoropleth } from "@nivo/geo";
-import { features } from "./world_countries";
+import { features } from "@./data/world_countries";
 
-const MapChart = ({ data,  domain}) => {
+const MapChart = ({ data, domain }) => {
   return (
     <div style={{ width: "100%", height: "400px" }}>
       <ResponsiveChoropleth

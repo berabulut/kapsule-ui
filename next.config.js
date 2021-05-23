@@ -15,5 +15,4 @@ module.exports = {
     serverApiUrl: PROD ? "http://service:8080" : "http://localhost:8080",
     redirectingURL: PROD ? "s" : "http://localhost:8081", //
   },
-  trailingSlash: true,
 };

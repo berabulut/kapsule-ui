@@ -14,7 +14,7 @@ import {
   osStatistics,
   languageStatistics,
 } from "@./helpers/userAgent";
-import { mapStatistics } from "@./helpers/map";
+import { mapStatistics, countryStatistics } from "@./helpers/map";
 
 const useStyles = makeStyles({
   mainText: {
@@ -40,11 +40,16 @@ const useStyles = makeStyles({
       "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
   },
   sectionTitle: {
-    fontWeight: "600",
-    fontSize: "2.25rem",
+    fontWeight: "400",
+    fontSize: "2rem",
+    color: "#808080",
     marginTop: "28px",
     textAlign: "center",
   },
+  listItem: {
+    fontSize: "2.25rem",
+    fontWeight: "500"
+  }
 });
 
 const Stats = ({ record }) => {
@@ -54,7 +59,8 @@ const Stats = ({ record }) => {
   const [browserChartData, setBrowserChartData] = useState([]);
   const [osChartData, setOSChartData] = useState([]);
   const [languagesChartData, setLanguagesChartData] = useState([]);
-  const [mapData, setMapData] = useState([]);
+  const [mapData, setMapData] = useState();
+  const [countryData, setCountryData] = useState();
 
   useEffect(() => {
     if (!record) return;
@@ -99,6 +105,11 @@ const Stats = ({ record }) => {
     setLanguagesChartData(languageStatistics(record.Visits));
     setMapData(mapStatistics(record.Visits));
   }, []);
+
+  useEffect(() => {
+    if (!mapData) return;
+    setCountryData(countryStatistics(mapData));
+  }, [mapData]);
 
   if (!record) {
     return (
@@ -223,8 +234,26 @@ const Stats = ({ record }) => {
               Geo Location
             </Typography>
           </Grid>
-          <Grid item xs={10} sm={8} style={{marginTop: "24px", marginBottom: "48px"}}>
-            <MapChart data={mapData} domain={[0, Math.ceil(record.Clicks)]} />
+          <Grid
+            item
+            xs={10}
+            sm={8}
+            style={{ marginTop: "24px", marginBottom: "48px" }}
+          >
+            <MapChart data={mapData} domain={[1, Math.ceil(record.Clicks) * 10]} />
+          </Grid>
+          <Grid item xs={10} sm={2}>
+            <ol>{countryData && countryData.length > 0 &&
+            (
+              countryData.map((country, index) => {
+                if(index > 5) return;
+                return(
+                  <li className={classes.listItem}>
+                    {country.name}
+                  </li>
+                )
+              })
+            )}</ol>
           </Grid>
         </Grid>
       </main>
