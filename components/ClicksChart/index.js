@@ -1,26 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import styles from "@./styles/Stats.module.css";
-import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles((theme) => ({
-  container: {
-    overflowX: "auto",
-    overflowY: "hidden",
-    ".container > div:first-of-type": { minWidth: "1200px" },
-    "&::-webkit-scrollbar": {
-      width: "8px",
-      height: "8px",
-    },
-    "&::-webkit-scrollbar-track": {
-      background: "#f1f1f1",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      background: "#888",
-    },
-    "&::-webkit-scrollbar-thumb:hover": {
-      background: "#555",
-    },
-  },
-}));
+
 
 const ClicksChart = ({ data }) => {
   return (

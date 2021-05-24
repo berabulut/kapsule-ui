@@ -29,11 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   detailsWrapper: {
-    marginTop: "100px",
-    justifyContent: "space-around",
-    [theme.breakpoints.down("xs")]: {
-      marginTop: "50px",
-    },
+    justifyContent: "space-evenly",
   },
   clicksText: {
     fontWeight: "600",
@@ -52,11 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
   chartWrapper: {
     marginTop: "100px",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     boxShadow:
       "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
     [theme.breakpoints.down("xs")]: {
       marginTop: "65px",
+      justifyContent: "space-evenly",
     },
   },
   sectionTitle: {
@@ -183,11 +180,11 @@ const Stats = ({ record }) => {
           <ClicksChart data={clicksChartData} />
         </Grid>
         {/* OS - DEVICES */}
-        <Grid container style={{ justifyContent: "space-around" }}>
+        <Grid container style={{ justifyContent: "space-evenly" }}>
           {/* OS */}
           <Grid
             item
-            xs={10}
+            xs={11}
             sm={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
@@ -210,7 +207,7 @@ const Stats = ({ record }) => {
           {/* DEVICES */}
           <Grid
             item
-            xs={10}
+            xs={11}
             sm={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
@@ -218,15 +215,25 @@ const Stats = ({ record }) => {
             <Typography variant="h3" className={classes.sectionTitle}>
               Devices
             </Typography>
-            <PieChart data={devicesChartData} innerRadius={0} colors="accent" />
+            <PieChart
+              data={devicesChartData}
+              innerRadius={0}
+              colors="accent"
+              legends={[
+                {
+                  anchor: "bottom",
+                  direction: "row",
+                },
+              ]}
+            />
           </Grid>
         </Grid>
         {/* BROWSERS - LANGUAGES */}
-        <Grid container style={{ justifyContent: "space-around" }}>
+        <Grid container style={{ justifyContent: "space-evenly" }}>
           {/* BROWSERS */}
           <Grid
             item
-            xs={10}
+            xs={11}
             sm={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
@@ -245,7 +252,7 @@ const Stats = ({ record }) => {
           {/* LANGUAGES */}
           <Grid
             item
-            xs={10}
+            xs={11}
             sm={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
