@@ -1,0 +1,10 @@
+.container {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.container > div:first-of-type {
+  min-width: 1200px;
+}
+
+

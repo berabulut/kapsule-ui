@@ -16,12 +16,24 @@ import {
 } from "@./helpers/userAgent";
 import { mapStatistics, countryStatistics } from "@./helpers/map";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   mainText: {
     fontWeight: 600,
     color: "#222831",
     marginBottom: "16px",
     fontSize: "3.5rem",
+    textAlign: "center",
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "0px",
+      marginTop: "32px",
+    },
+  },
+  detailsWrapper: {
+    marginTop: "100px",
+    justifyContent: "space-around",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "50px",
+    },
   },
   clicksText: {
     fontWeight: "600",
@@ -39,8 +51,13 @@ const useStyles = makeStyles({
     textOverflow: "ellipsis",
   },
   chartWrapper: {
+    marginTop: "100px",
+    justifyContent: "space-around",
     boxShadow:
       "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "65px",
+    },
   },
   sectionTitle: {
     fontWeight: "400",
@@ -52,9 +69,9 @@ const useStyles = makeStyles({
   listItem: {
     fontSize: "2.15rem",
     fontWeight: "400",
-    color: "#808080"
+    color: "#808080",
   },
-});
+}));
 
 const Stats = ({ record }) => {
   const classes = useStyles();
@@ -133,18 +150,15 @@ const Stats = ({ record }) => {
           All Time Statistics
         </Typography>
         {/* DETAILS - TOTAL CLICKS */}
-        <Grid
-          container
-          style={{ marginTop: "100px", justifyContent: "space-around" }}
-        >
+        <Grid container className={classes.detailsWrapper}>
           {/* DETAILS */}
-          <Grid item xs={10} sm={6}>
+          <Grid item xs={11} sm={6} className={classes.chartWrapper}>
             <DetailsCard record={record} />
           </Grid>
           {/* TOTAL CLICKS */}
           <Grid
             item
-            xs={10}
+            xs={11}
             sm={4}
             className={classes.chartWrapper}
             style={{ padding: "16px" }}
@@ -162,21 +176,14 @@ const Stats = ({ record }) => {
           </Grid>
         </Grid>
         {/* HISTORY */}
-        <Grid
-          container
-          style={{ marginTop: "100px", justifyContent: "space-around" }}
-          className={classes.chartWrapper}
-        >
+        <Grid container className={classes.chartWrapper}>
           <Typography variant="h3" className={classes.sectionTitle}>
             History
           </Typography>
           <ClicksChart data={clicksChartData} />
         </Grid>
         {/* OS - DEVICES */}
-        <Grid
-          container
-          style={{ marginTop: "100px", justifyContent: "space-around" }}
-        >
+        <Grid container style={{ justifyContent: "space-around" }}>
           {/* OS */}
           <Grid
             item
@@ -215,10 +222,7 @@ const Stats = ({ record }) => {
           </Grid>
         </Grid>
         {/* BROWSERS - LANGUAGES */}
-        <Grid
-          container
-          style={{ marginTop: "100px", justifyContent: "space-around" }}
-        >
+        <Grid container style={{ justifyContent: "space-around" }}>
           {/* BROWSERS */}
           <Grid
             item
@@ -258,13 +262,13 @@ const Stats = ({ record }) => {
           </Grid>
         </Grid>
         {/* GEO LOCATION */}
-        <Grid
-          container
-          style={{ marginTop: "100px" }}
-          className={classes.chartWrapper}
-        >
+        <Grid container className={classes.chartWrapper}>
           <Grid item xs={12}>
-            <Typography variant="h3" className={classes.sectionTitle} style={{marginBottom: "14px"}}>
+            <Typography
+              variant="h3"
+              className={classes.sectionTitle}
+              style={{ marginBottom: "14px" }}
+            >
               Geo Location
             </Typography>
           </Grid>

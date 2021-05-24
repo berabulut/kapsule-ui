@@ -3,29 +3,34 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Divider, Button } from "@material-ui/core";
 import { parseTimeStamp } from "@./helpers/date";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "white",
     padding: "24px",
     marginTop: "12px",
     marginBottom: "12px",
     width: "100%",
-    boxShadow:
-      "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
+    [theme.breakpoints.down("xs")]: {
+      padding: "16px",
+    },
   },
   fieldTitle: {
     color: "#808080",
     fontSize: "1.05rem",
     marginBottom: "4px",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
+    wordWrap: "break-word",
+    // whiteSpace: "nowrap",
+    // overflow: "hidden",
+    // textOverflow: "ellipsis",
+    // [theme.breakpoints.down("xs")]: {
+    //   wordWrap: "break-word",
+    // },
   },
   strong: {
     color: "#222831",
     fontSize: "1.15rem",
   },
-});
+}));
 
 const DetailsCard = ({ record }) => {
   const classes = useStyles();
