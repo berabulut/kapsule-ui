@@ -10,27 +10,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../styles/theme";
 import "../styles/globals.css";
 
-import { Header, Footer } from "../components/layout";
-
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import LinkIcon from "@material-ui/icons/Link";
-
-const useStyles = makeStyles({
-  mainText: {
-    fontWeight: 600,
-    color: "#222831",
-    marginBottom: "16px",
-    marginTop: "16px",
-    fontSize: "3rem",
-    paddingLeft: "64px",
-  },
-  icon: {
-    fontSize: "60px",
-    transform: "rotate(-45deg)",
-    color: "#00ADB5",
-  },
-});
+import { Header, Footer } from "@/components/layout";
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
@@ -40,8 +20,6 @@ function MyApp({ Component, pageProps }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-
-  const classes = useStyles();
 
   return (
     <React.Fragment>
@@ -55,10 +33,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <header>
-          <Typography className={classes.mainText} variant="h1">
-            <LinkIcon className={classes.icon} />
-            Kapsule
-          </Typography>
+          <Header />
         </header>
         <CssBaseline />
         <Component {...pageProps} />

@@ -1,6 +1,6 @@
 import { ResponsivePie } from "@nivo/pie";
 
-const PieChart = ({ data, colors, innerRadius, padAngle }) => {
+const PieChart = ({ data, colors, innerRadius, padAngle, legends }) => {
   return (
     <div style={{ width: "100%", height: "400px" }}>
       <ResponsivePie
@@ -9,17 +9,18 @@ const PieChart = ({ data, colors, innerRadius, padAngle }) => {
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={innerRadius}
         padAngle={padAngle ? padAngle : 0.7}
-        cornerRadius={10}
+        cornerRadius={5}
         activeOuterRadiusOffset={8}
         borderWidth={4}
         borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
         arcLinkLabelsSkipAngle={10}
+        arcLinkLabelsDiagonalLength={5}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: "color" }}
         arcLabelsSkipAngle={10}
-
         arcLabelsTextColor="#ffffff"
+        arcLinkLabels
         motionConfig="slow"
         defs={[
           {
@@ -41,31 +42,61 @@ const PieChart = ({ data, colors, innerRadius, padAngle }) => {
             spacing: 10,
           },
         ]}
-        legends={[
-          {
-            anchor: "top-left",
-            direction: "column",
-            justify: false,
-            translateX: -80,
-            translateY: 56,
-            itemsSpacing: 30,
-            itemWidth: 100,
-            itemHeight: 18,
-            itemTextColor: "#999",
-            itemDirection: "left-to-right",
-            itemOpacity: 1,
-            symbolSize: 18,
-            symbolShape: "circle",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemTextColor: "#000",
+        legends={
+          legends === false
+            ? []
+            : legends
+            ? [
+                {
+                  anchor: "bottom",
+                  direction: "row",
+                  justify: false,
+                  translateX: 0,
+                  translateY: 44,
+                  itemsSpacing: 5,
+                  itemWidth: 85,
+                  itemHeight: 18,
+                  itemTextColor: "#999",
+                  itemDirection: "left-to-right",
+                  itemOpacity: 1,
+                  symbolSize: 18,
+                  symbolShape: "circle",
+                  effects: [
+                    {
+                      on: "hover",
+                      style: {
+                        itemTextColor: "#000",
+                      },
+                    },
+                  ],
                 },
-              },
-            ],
-          },
-        ]}
+              ]
+            : [
+                {
+                  anchor: "top-left",
+                  direction: "column",
+                  justify: false,
+                  translateX: -70,
+                  translateY: 56,
+                  itemsSpacing: 5,
+                  itemWidth: 90,
+                  itemHeight: 18,
+                  itemTextColor: "#999",
+                  itemDirection: "left-to-right",
+                  itemOpacity: 1,
+                  symbolSize: 18,
+                  symbolShape: "circle",
+                  effects: [
+                    {
+                      on: "hover",
+                      style: {
+                        itemTextColor: "#000",
+                      },
+                    },
+                  ],
+                },
+              ]
+        }
       />
     </div>
   );

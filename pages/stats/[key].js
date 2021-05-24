@@ -32,8 +32,11 @@ const useStyles = makeStyles({
   counterText: {
     color: "#00ADB5",
     textAlign: "center",
-    fontSize: "6rem",
+    fontSize: "5rem",
     fontWeight: "400",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   chartWrapper: {
     boxShadow:
@@ -47,9 +50,10 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   listItem: {
-    fontSize: "2.25rem",
-    fontWeight: "500"
-  }
+    fontSize: "2.15rem",
+    fontWeight: "400",
+    color: "#808080"
+  },
 });
 
 const Stats = ({ record }) => {
@@ -121,18 +125,30 @@ const Stats = ({ record }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      <main className={styles.main} style={{ paddingTop: "0px" }}>
+      <main
+        className={styles.main}
+        style={{ paddingTop: "0px", marginTop: "32px" }}
+      >
         <Typography className={classes.mainText} variant="h1" component="h2">
           All Time Statistics
         </Typography>
+        {/* DETAILS - TOTAL CLICKS */}
         <Grid
           container
           style={{ marginTop: "100px", justifyContent: "space-around" }}
         >
+          {/* DETAILS */}
           <Grid item xs={10} sm={6}>
             <DetailsCard record={record} />
           </Grid>
-          <Grid item xs={10} sm={4} className={classes.chartWrapper}>
+          {/* TOTAL CLICKS */}
+          <Grid
+            item
+            xs={10}
+            sm={4}
+            className={classes.chartWrapper}
+            style={{ padding: "16px" }}
+          >
             <Typography
               className={classes.clicksText}
               variant="h3"
@@ -145,6 +161,7 @@ const Stats = ({ record }) => {
             </Typography>
           </Grid>
         </Grid>
+        {/* HISTORY */}
         <Grid
           container
           style={{ marginTop: "100px", justifyContent: "space-around" }}
@@ -155,10 +172,12 @@ const Stats = ({ record }) => {
           </Typography>
           <ClicksChart data={clicksChartData} />
         </Grid>
+        {/* OS - DEVICES */}
         <Grid
           container
           style={{ marginTop: "100px", justifyContent: "space-around" }}
         >
+          {/* OS */}
           <Grid
             item
             xs={10}
@@ -169,9 +188,19 @@ const Stats = ({ record }) => {
             <Typography variant="h3" className={classes.sectionTitle}>
               OS
             </Typography>
-            <PieChart data={osChartData} innerRadius={0} colors="category10" />
+            <PieChart
+              data={osChartData}
+              innerRadius={0}
+              colors="category10"
+              legends={[
+                {
+                  anchor: "bottom",
+                  direction: "row",
+                },
+              ]}
+            />
           </Grid>
-
+          {/* DEVICES */}
           <Grid
             item
             xs={10}
@@ -185,10 +214,12 @@ const Stats = ({ record }) => {
             <PieChart data={devicesChartData} innerRadius={0} colors="accent" />
           </Grid>
         </Grid>
+        {/* BROWSERS - LANGUAGES */}
         <Grid
           container
           style={{ marginTop: "100px", justifyContent: "space-around" }}
         >
+          {/* BROWSERS */}
           <Grid
             item
             xs={10}
@@ -204,8 +235,10 @@ const Stats = ({ record }) => {
               innerRadius={0.7}
               padAngle={3}
               colors="set2"
+              legends={false}
             />
           </Grid>
+          {/* LANGUAGES */}
           <Grid
             item
             xs={10}
@@ -224,36 +257,37 @@ const Stats = ({ record }) => {
             />
           </Grid>
         </Grid>
+        {/* GEO LOCATION */}
         <Grid
           container
           style={{ marginTop: "100px" }}
           className={classes.chartWrapper}
         >
           <Grid item xs={12}>
-            <Typography variant="h3" className={classes.sectionTitle}>
+            <Typography variant="h3" className={classes.sectionTitle} style={{marginBottom: "14px"}}>
               Geo Location
             </Typography>
           </Grid>
           <Grid
             item
             xs={10}
-            sm={8}
+            sm={9}
             style={{ marginTop: "24px", marginBottom: "48px" }}
           >
-            <MapChart data={mapData} domain={[1, Math.ceil(record.Clicks) * 10]} />
+            <MapChart
+              data={mapData}
+              domain={[1, Math.ceil(record.Clicks) * 10]}
+            />
           </Grid>
           <Grid item xs={10} sm={2}>
-            <ol>{countryData && countryData.length > 0 &&
-            (
-              countryData.map((country, index) => {
-                if(index > 5) return;
-                return(
-                  <li className={classes.listItem}>
-                    {country.name}
-                  </li>
-                )
-              })
-            )}</ol>
+            <ol>
+              {countryData &&
+                countryData.length > 0 &&
+                countryData.map((country, index) => {
+                  if (index > 5) return;
+                  return <li className={classes.listItem}>{country.name}</li>;
+                })}
+            </ol>
           </Grid>
         </Grid>
       </main>

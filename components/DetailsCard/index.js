@@ -17,6 +17,9 @@ const useStyles = makeStyles({
     color: "#808080",
     fontSize: "1.05rem",
     marginBottom: "4px",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   strong: {
     color: "#222831",
