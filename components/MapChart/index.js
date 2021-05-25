@@ -1,9 +1,10 @@
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { features } from "@./data/world_countries";
+import styles from "@./styles/Map.module.css";
 
 const MapChart = ({ data, domain }) => {
   return (
-    <div style={{ width: "100%", height: "400px" }}>
+    <div style={{ width: "100%", height: "400px" }} className={styles.container}>
       <ResponsiveChoropleth
         data={data}
         features={features}

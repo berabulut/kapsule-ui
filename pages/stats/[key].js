@@ -56,15 +56,29 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "space-evenly",
     },
   },
+  mapWrapper: {
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column-reverse",
+      alignItems: "center",
+    },
+  },
+  clicksWrapper: {
+    [theme.breakpoints.down("sm")]: {
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+    },
+  },
   sectionTitle: {
+    color: "#4e4d4d",
     fontWeight: "400",
     fontSize: "2rem",
-    color: "#808080",
     marginTop: "28px",
     textAlign: "center",
   },
   listItem: {
-    fontSize: "2.15rem",
+    fontSize: "1.75rem",
     fontWeight: "400",
     color: "#808080",
   },
@@ -149,7 +163,7 @@ const Stats = ({ record }) => {
         {/* DETAILS - TOTAL CLICKS */}
         <Grid container className={classes.detailsWrapper}>
           {/* DETAILS */}
-          <Grid item xs={11} sm={6} className={classes.chartWrapper}>
+          <Grid item xs={11} sm={7} className={classes.chartWrapper}>
             <DetailsCard record={record} />
           </Grid>
           {/* TOTAL CLICKS */}
@@ -160,16 +174,18 @@ const Stats = ({ record }) => {
             className={classes.chartWrapper}
             style={{ padding: "16px" }}
           >
-            <Typography
-              className={classes.clicksText}
-              variant="h3"
-              component="p"
-            >
-              Total Clicks
-            </Typography>
-            <Typography className={classes.counterText} component="p">
-              {record.Clicks}
-            </Typography>
+            <div className={classes.clicksWrapper}>
+              <Typography
+                className={classes.clicksText}
+                variant="h3"
+                component="p"
+              >
+                Total Clicks
+              </Typography>
+              <Typography className={classes.counterText} component="p">
+                {record.Clicks}
+              </Typography>
+            </div>
           </Grid>
         </Grid>
         {/* HISTORY */}
@@ -279,26 +295,29 @@ const Stats = ({ record }) => {
               Geo Location
             </Typography>
           </Grid>
-          <Grid
-            item
-            xs={10}
-            sm={9}
-            style={{ marginTop: "24px", marginBottom: "48px" }}
-          >
-            <MapChart
-              data={mapData}
-              domain={[1, Math.ceil(record.Clicks) * 10]}
-            />
-          </Grid>
-          <Grid item xs={10} sm={2}>
-            <ol>
-              {countryData &&
-                countryData.length > 0 &&
-                countryData.map((country, index) => {
-                  if (index > 5) return;
-                  return <li className={classes.listItem}>{country.name}</li>;
-                })}
-            </ol>
+          <Grid item container className={classes.mapWrapper}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={9}
+              style={{ marginTop: "24px", marginBottom: "48px" }}
+            >
+              <MapChart
+                data={mapData}
+                domain={[1, Math.ceil(record.Clicks) * 10]}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={2}>
+              <ol>
+                {countryData &&
+                  countryData.length > 0 &&
+                  countryData.map((country, index) => {
+                    if (index > 5) return;
+                    return <li className={classes.listItem}>{country.name}</li>;
+                  })}
+              </ol>
+            </Grid>
           </Grid>
         </Grid>
       </main>

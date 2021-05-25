@@ -1,0 +1,29 @@
+.container {
+	overflow-x: auto;
+	overflow-y: hidden;
+  }
+  
+  .container > div:first-of-type {
+	min-width: 750px;
+  }
+  
+  
+  .container::-webkit-scrollbar {
+	width: 8px;
+	height: 7px;
+  }
+  
+  /* Track */
+  .container::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .container::-webkit-scrollbar-thumb {
+	background: #888; 
+  }
+  
+  /* Handle on hover */
+  .container::-webkit-scrollbar-thumb:hover {
+	background: #555; 
+  }
