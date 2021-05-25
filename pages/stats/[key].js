@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "16px",
     fontSize: "3.5rem",
     textAlign: "center",
+    [theme.breakpoints.down("md")]: {
+      marginTop: "48px",
+    },
     [theme.breakpoints.down("xs")]: {
       marginBottom: "0px",
       marginTop: "32px",
@@ -51,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     boxShadow:
       "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
+    [theme.breakpoints.down("md")]: {
+      marginTop: "45px",
+    },
     [theme.breakpoints.down("xs")]: {
       marginTop: "65px",
       justifyContent: "space-evenly",
@@ -86,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Stats = ({ record }) => {
   const classes = useStyles();
-  const [clicksChartData, setClicksChartData] = useState([]);
+  const [clicksChartData, setClicksChartData] = useState();
   const [devicesChartData, setDevicesChartData] = useState([]);
   const [browserChartData, setBrowserChartData] = useState([]);
   const [osChartData, setOSChartData] = useState([]);
@@ -97,7 +103,6 @@ const Stats = ({ record }) => {
   useEffect(() => {
     if (!record) return;
     if (!record.Visits) return;
-    console.log(record);
 
     let arr = [
       {
@@ -130,6 +135,8 @@ const Stats = ({ record }) => {
       }
     }
 
+    arr[0].data = arr[0].data.slice(arr[0].data.length - 5, arr[0].data.length);
+
     setClicksChartData(arr);
     setBrowserChartData(browserStatistics(record.Visits));
     setDevicesChartData(deviceStatistics(record.Visits));
@@ -142,6 +149,11 @@ const Stats = ({ record }) => {
     if (!mapData) return;
     setCountryData(countryStatistics(mapData));
   }, [mapData]);
+
+  useEffect(() => {
+    if (!clicksChartData) return;
+    console.log(clicksChartData);
+  }, [clicksChartData]);
 
   if (!record) {
     return (
