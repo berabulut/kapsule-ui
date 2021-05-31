@@ -17,31 +17,36 @@ const useStyles = makeStyles({
   },
   linkTitle: {
     fontSize: "1rem",
+    fontFamily: "Lato",
+    letterSpacing: "-0.035em",
+    fontWeight: "600"
   },
   date: {
     fontSize: "0.875rem",
-    fontWeight: "500",
+    fontWeight: "600",
+    fontFamily: "Lato",
     width: "100px",
     textAlign: "center",
     color: "#808080",
   },
   link: {
-    fontSize: "0.85rem",
-    fontFamily: "Open Sans",
+    fontSize: "0.9rem",
+    fontFamily: "Lato",
     letterSpacing: "0px",
     color: "#808080",
+    wordWrap: "break-word"
   },
   shortLink: {
     fontSize: "0.95rem",
-    fontFamily: "Open Sans",
+    fontFamily: "Lato",
     letterSpacing: "0px",
     color: "#00ADB5",
     fontWeight: "600",
   },
   clicks: {
     marginTop: "8px",
-    fontSize: "0.85rem",
-    fontFamily: "Open Sans",
+    fontSize: "0.92rem",
+    fontFamily: "Lato",
     letterSpacing: "0px",
     fontWeight: "600",
   },
