@@ -12,9 +12,13 @@ const PieChart = ({ data, colors, innerRadius, padAngle, legends }) => {
         cornerRadius={5}
         activeOuterRadiusOffset={8}
         borderWidth={4}
+        theme={{
+          fontFamily: "Poppins",
+          fontWeight: 700,
+        }}
         borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
         arcLinkLabelsSkipAngle={10}
-        arcLinkLabelsDiagonalLength={5}
+        arcLinkLabelsDiagonalLength={10}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: "color" }}

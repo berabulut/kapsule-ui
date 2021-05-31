@@ -35,10 +35,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
   },
   clicksText: {
-    fontWeight: "600",
+    fontWeight: "800",
     fontSize: "2.25rem",
-    textAlign: "center",
     paddingTop: "24px",
+    fontFamily: "Lato",
+    textAlign: "center"
   },
   counterText: {
     color: "#00ADB5",
@@ -48,12 +49,12 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    fontFamily: "Lato"
   },
   chartWrapper: {
     marginTop: "100px",
     justifyContent: "space-evenly",
-    boxShadow:
-      "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
+    boxShadow: "0px 4px 12px rgb(0 0 0 / 5%)",
     [theme.breakpoints.down("md")]: {
       marginTop: "45px",
     },
@@ -77,16 +78,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sectionTitle: {
-    color: "#4e4d4d",
-    fontWeight: "400",
-    fontSize: "2rem",
+    fontWeight: "600",
+    fontFamily: "Lato",
+    fontSize: "1.5rem",
     marginTop: "28px",
-    textAlign: "center",
+    paddingLeft: "24px"
   },
   listItem: {
-    fontSize: "1.75rem",
-    fontWeight: "400",
+    fontSize: "1.7rem",
+    fontWeight: "300",
     color: "#808080",
+    fontFamily: "Lato",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1.4rem",
+    }
   },
 }));
 
@@ -149,11 +154,6 @@ const Stats = ({ record }) => {
     if (!mapData) return;
     setCountryData(countryStatistics(mapData));
   }, [mapData]);
-
-  useEffect(() => {
-    if (!clicksChartData) return;
-    console.log(clicksChartData);
-  }, [clicksChartData]);
 
   if (!record) {
     return (
@@ -272,7 +272,7 @@ const Stats = ({ record }) => {
             <PieChart
               data={browserChartData}
               innerRadius={0.7}
-              padAngle={3}
+              padAngle={1}
               colors="set2"
               legends={false}
             />
@@ -291,7 +291,7 @@ const Stats = ({ record }) => {
             <PieChart
               data={languagesChartData}
               innerRadius={0.7}
-              padAngle={3}
+              padAngle={1}
               colors="dark2"
             />
           </Grid>
@@ -302,7 +302,7 @@ const Stats = ({ record }) => {
             <Typography
               variant="h3"
               className={classes.sectionTitle}
-              style={{ marginBottom: "14px" }}
+              style={{ marginBottom: "14px", textAlign: "center" }}
             >
               Geo Location
             </Typography>

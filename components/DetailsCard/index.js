@@ -16,9 +16,10 @@ const useStyles = makeStyles((theme) => ({
   },
   fieldTitle: {
     color: "#808080",
-    fontSize: "1.05rem",
+    fontSize: "1rem",
     marginBottom: "4px",
     wordWrap: "break-word",
+    fontFamily: "Lato"
     // whiteSpace: "nowrap",
     // overflow: "hidden",
     // textOverflow: "ellipsis",
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
   strong: {
     color: "#222831",
-    fontSize: "1.15rem",
+    fontSize: "1.09rem",
+    paddingRight: "5px"
   },
 }));
 
