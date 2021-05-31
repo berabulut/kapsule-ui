@@ -1,6 +1,5 @@
 .container {
   max-width: 900px;
-  width: 900px;
   min-height: 80vh;
   padding: 0 0.5rem;
   display: flex;
@@ -134,5 +133,8 @@
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+  .main {
+    padding-top: 3rem;
   }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
-import { Typography, Snackbar } from "@material-ui/core";
+import { Typography, Snackbar, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { shortenURL, getMultipleRecords } from "@./api";
 import LinkCard from "@/components/LinkCard";
@@ -9,12 +9,16 @@ import styles from "../styles/Home.module.css";
 import Cookies from "cookies";
 import JSCookies from "js-cookie";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   mainText: {
     fontWeight: 600,
     color: "#222831",
     marginBottom: "16px",
     fontSize: "5.5rem",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "3.5rem",
+      textAlign: "center",
+    },
   },
   subText: {
     fontWeight: 500,
@@ -26,6 +30,11 @@ const useStyles = makeStyles({
     lineHeight: "1.3",
     color: "#393E46",
     marginBottom: "30px",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      fontSize: "1.1rem",
+      marginTop: "4px"
+    },
   },
   input: {
     outlineColor: "#c5c4c4",
@@ -40,6 +49,11 @@ const useStyles = makeStyles({
     fontWeight: "450",
     fontFamily: "Roboto",
     color: "#808080",
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "12px",
+      marginRight: "5px",
+      fontSize: "1rem",
+    },
   },
   button: {
     flexGrow: 1,
@@ -57,17 +71,35 @@ const useStyles = makeStyles({
       backgroundColor: "#00797E",
       cursor: "pointer",
     },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1rem",
+    },
   },
   infoText: {
-    fontSize: "0.835rem",
+    fontSize: "0.9rem",
     fontWeight: "400",
-    fontFamily: "Open Sans",
+    fontFamily: "Lato",
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "12px",
+      paddingRight: "12px",
+    },
   },
   linksContainer: {
     marginTop: "24px",
     width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "4px"
+    },
   },
-});
+  inputWrapper: {
+    display: "flex",
+    width: "100%",
+    height: "60px",
+    [theme.breakpoints.down("xs")]: {
+      height: "50px",
+    },
+  },
+}));
 
 const Home = ({ t, links }) => {
   const classes = useStyles();
@@ -184,7 +216,7 @@ const Home = ({ t, links }) => {
         <Typography className={classes.subText} variant="h3">
           {t("subTitle")}
         </Typography>
-        <div style={{ display: "flex", width: "100%", height: "60px" }}>
+        <div className={classes.inputWrapper}>
           <input
             value={userInput}
             onChange={(e) => {
@@ -204,7 +236,7 @@ const Home = ({ t, links }) => {
             {buttonText}
           </button>
         </div>
-        <div style={{ marginTop: "4px", width: "100%", textAlign: "center" }}>
+        <div style={{ marginTop: "8px", width: "100%", textAlign: "center" }}>
           <p className={classes.infoText}>
             By using our service you accept the Terms of service and Privacy.
           </p>
