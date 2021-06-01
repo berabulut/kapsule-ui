@@ -5,7 +5,7 @@ import { Typography, Grid, Divider, Button } from "@material-ui/core";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import { parseTimeStamp } from "@./helpers/date";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "white",
     padding: "12px",
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     fontSize: "1rem",
     fontFamily: "Lato",
     letterSpacing: "-0.035em",
-    fontWeight: "600"
+    fontWeight: "600",
   },
   date: {
     fontSize: "0.875rem",
@@ -34,7 +34,10 @@ const useStyles = makeStyles({
     fontFamily: "Lato",
     letterSpacing: "0px",
     color: "#808080",
-    wordWrap: "break-word"
+    wordWrap: "break-word",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "8px"
+    },
   },
   shortLink: {
     fontSize: "0.95rem",
@@ -42,6 +45,10 @@ const useStyles = makeStyles({
     letterSpacing: "0px",
     color: "#00ADB5",
     fontWeight: "600",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+      marginTop: "8px"
+    },
   },
   clicks: {
     marginTop: "8px",
@@ -49,6 +56,9 @@ const useStyles = makeStyles({
     fontFamily: "Lato",
     letterSpacing: "0px",
     fontWeight: "600",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+    },
   },
   divider: {
     marginTop: "12px",
@@ -60,7 +70,28 @@ const useStyles = makeStyles({
     color: "white",
     height: "42px",
   },
-});
+  buttonContainer: {
+    display: "flex",
+    alignItems: "center",
+    [theme.breakpoints.down("xs")]: {
+      justifyContent: "center",
+      marginTop: "16px",
+      marginBottom: "8px",
+      width: "100%"
+    },
+  },
+  dateContainer: {
+    display: "flex",
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "flex-end",
+    },
+    [theme.breakpoints.down("xs")]: {
+      alignItems: "flex-start",
+      paddingTop: "3px",
+    },
+  },
+}));
 
 const LinkCard = ({ record }) => {
   const classes = useStyles();
@@ -95,15 +126,21 @@ const LinkCard = ({ record }) => {
   return (
     <div className={classes.container}>
       <Grid container>
-        <Grid item style={{ flexGrow: "1" }}>
-          <Typography variant="h6" component="p" className={classes.linkTitle}>
-            {record.Title}
-          </Typography>
-        </Grid>
-        <Grid item style={{ display: "flex", alignItems: "center" }}>
-          <Typography variant="body2" component="p" className={classes.date}>
-            {date}
-          </Typography>
+        <Grid item container justify="space-between">
+          <Grid item md={11} sm={10} xs={8} style={{ flexGrow: "1" }}>
+            <Typography
+              variant="h6"
+              component="p"
+              className={classes.linkTitle}
+            >
+              {record.Title}
+            </Typography>
+          </Grid>
+          <Grid item md={1} sm={2} xs={3} className={classes.dateContainer}>
+            <Typography variant="body2" component="p" className={classes.date}>
+              {date}
+            </Typography>
+          </Grid>
         </Grid>
         <Grid item xs={12} style={{ marginTop: "4px" }}>
           <a href={record.Value} target="_blank" rel="noopener noreferrer">
@@ -135,7 +172,7 @@ const LinkCard = ({ record }) => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item style={{ display: "flex", alignItems: "center" }}>
+        <div  className={classes.buttonContainer}>
           <Button
             onClick={handleClick}
             variant="contained"
@@ -146,7 +183,7 @@ const LinkCard = ({ record }) => {
           >
             Details
           </Button>
-        </Grid>
+        </div>
       </Grid>
     </div>
   );

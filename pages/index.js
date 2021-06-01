@@ -51,8 +51,11 @@ const useStyles = makeStyles((theme) => ({
     color: "#808080",
     [theme.breakpoints.down("xs")]: {
       paddingLeft: "12px",
-      marginRight: "5px",
+      marginRight: "15px",
       fontSize: "1rem",
+      height: "50px",
+      width: "100%",
+      marginBottom: "16px"
     },
   },
   button: {
@@ -73,6 +76,9 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: "1rem",
+      height: "45px",
+      width: "50%",
+      margin: "auto",
     },
   },
   infoText: {
@@ -82,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       paddingLeft: "12px",
       paddingRight: "12px",
+      fontSize: "0.835rem",
     },
   },
   linksContainer: {
@@ -96,7 +103,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "60px",
     [theme.breakpoints.down("xs")]: {
-      height: "50px",
+      height: "auto",
+      flexDirection: "column",
     },
   },
 }));

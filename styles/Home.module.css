@@ -129,6 +129,12 @@
   height: 1em;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 0 48px;
+  }
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
@@ -136,5 +142,8 @@
   }
   .main {
     padding-top: 3rem;
+  }
+  .container {
+    padding: 0 32px;
   }
 }
