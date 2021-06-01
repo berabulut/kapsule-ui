@@ -15,9 +15,11 @@ const useStyles = makeStyles((theme) => ({
     color: "#222831",
     marginBottom: "16px",
     fontSize: "5.5rem",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
+    },
     [theme.breakpoints.down("xs")]: {
       fontSize: "3.5rem",
-      textAlign: "center",
     },
   },
   subText: {

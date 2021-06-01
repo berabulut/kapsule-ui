@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2.25rem",
     paddingTop: "24px",
     fontFamily: "Lato",
-    textAlign: "center"
+    textAlign: "center",
   },
   counterText: {
     color: "#00ADB5",
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    fontFamily: "Lato"
+    fontFamily: "Lato",
   },
   chartWrapper: {
     marginTop: "100px",
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Lato",
     fontSize: "1.5rem",
     marginTop: "28px",
-    paddingLeft: "24px"
+    paddingLeft: "24px",
   },
   listItem: {
     fontSize: "1.7rem",
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Lato",
     [theme.breakpoints.down("xs")]: {
       fontSize: "1.4rem",
-    }
+    },
   },
 }));
 
@@ -339,11 +339,10 @@ const Stats = ({ record }) => {
 
 export async function getServerSideProps({ query }) {
   try {
-    let url;
+    let url = process.env.apiURL + "/" + query.key;
     if (typeof window === "undefined") {
       url = process.env.serverApiUrl + "/" + query.key;
     }
-    url = process.env.apiURL + "/" + query.key;
     const res = await getStats(url);
     const record = res.record;
     return { props: { record } };
