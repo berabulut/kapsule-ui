@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "4px",
   },
   linkTitle: {
-    fontSize: "1rem",
+    fontSize: "1.05rem",
     fontFamily: "Lato",
     letterSpacing: "-0.035em",
     fontWeight: "600",

@@ -1,27 +1,33 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  Typography,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  InputBase,
+} from "@material-ui/core";
+import { makeStyles, fade } from "@material-ui/core/styles";
 
-import { Menu, Link } from "@material-ui/icons";
+import { Menu, Link, Search, GitHub } from "@material-ui/icons";
 
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0px 100px",
+    [theme.breakpoints.down("md")]: {
+      padding: "0px 25px",
+    },
     [theme.breakpoints.down("xs")]: {
-      display: "flex",
       margin: "0px",
       padding: "16px",
-      alignItems: "center",
     },
   },
   list: {
@@ -34,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "16px",
     marginTop: "16px",
     fontSize: "3rem",
-    marginLeft: "64px",
     "&:hover": {
       cursor: "pointer",
     },
@@ -65,6 +70,61 @@ const useStyles = makeStyles((theme) => ({
   },
   menuIcon: {
     fontSize: "40px",
+  },
+  search: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(3),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    color: "#c5c4c4",
+    zIndex: "99",
+    padding: theme.spacing(0, 1),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  searchInput: {
+    color: "#808080",
+    backgroundColor: "#F5F5F5",
+    fontWeight: "500",
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+  gitIcon: {
+    color: "#00ADB5",
+    [theme.breakpoints.down("lg")]: {
+      paddingLeft: "48px",
+    },
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: "24px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "24px",
+      display: "none"
+    },
   },
 }));
 
@@ -117,6 +177,21 @@ const Header = () => {
         Kapsule
       </Typography>
       <div style={{ flex: 1 }}></div>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <Search />
+        </div>
+        <InputBase
+          placeholder="Search with ID"
+          classes={{
+            input: classes.searchInput,
+          }}
+          inputProps={{ "aria-label": "search" }}
+        />
+      </div>
+      <div className={classes.gitIcon}>
+        <GitHub />
+      </div>
       <div className={classes.mobileMenu}>
         <Menu className={classes.menuIcon} onClick={toggleDrawer(true)} />
       </div>
