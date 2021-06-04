@@ -1,8 +1,28 @@
+import { useState, useEffect } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import styles from "@./styles/Stats.module.css";
 
+const ClicksChart = (props) => {
+  const [data, setData] = useState([]);
 
-const ClicksChart = ({ data }) => {
+  useEffect(() => {
+    if (!props.data) return;
+    if (props.data[0].data.length === 1) {
+      // adding another day to record if there is only one day of record
+      let x = props.data[0].data[0].x;
+
+      x = parseInt(x[0]) + 1 + x.slice(1, x.length);
+
+      props.data[0].data.push({
+        x: x,
+        y: 0,
+      });
+      setData(props.data);
+      return;
+    }
+    setData(props.data);
+  }, [props.data]);
+
   return (
     <div
       style={{ width: "100%", height: "400px" }}
