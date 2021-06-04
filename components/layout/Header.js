@@ -9,15 +9,14 @@ import {
   InputBase,
   IconButton,
   Snackbar,
+  ListItemIcon,
+  ListItemText,
 } from "@material-ui/core";
-import { makeStyles, fade } from "@material-ui/core/styles";
-import { Menu, Link, Search, GitHub } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
+import { Menu, Link, Search, GitHub, Close } from "@material-ui/icons";
 import Alert from "@/components/Alert";
 
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -31,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
       margin: "0px",
       padding: "16px",
     },
-  },
-  list: {
-    width: 250,
   },
   button: {
     display: "inline-block",
@@ -69,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuIcon: {
     fontSize: "40px",
+    color: "rgba(0, 0, 0, 0.87)",
   },
   search: {
     padding: "2px 4px",
@@ -76,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     backgroundColor: "#F5F5F5",
     height: "48px",
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
   searchInput: {
     marginLeft: theme.spacing(1),
@@ -100,6 +100,28 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       cursor: "pointer",
     },
+  },
+  drawer: {
+    width: "100%",
+  },
+  list: {
+    width: "100%",
+  },
+  mobileMenuSearch: {
+    width: "calc(100% - 32px)",
+    height: "48px",
+    margin: "12px auto 32px auto",
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#F5F5F5",
+  },
+  mobileMenuText: {
+    fontWeight: "600",
+    fontFamily: "Lato",
+    marginTop: "16px",
+    fontSize: "1.5rem",
+    textAlign: "center",
   },
 }));
 
@@ -135,8 +157,8 @@ const Header = () => {
       setOpenError(true);
       return;
     }
-
     router.push("/stats/" + input);
+    setOpenDrawer(false);
   };
 
   const closeError = (event, reason) => {
@@ -148,21 +170,44 @@ const Header = () => {
   };
 
   const list = () => (
-    <div
-      className={classes.list}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <div className={classes.list} role="presentation">
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem style={{ justifyContent: "flex-end" }} key="Button">
+          <ListItemIcon
+            style={{ justifyContent: "flex-end" }}
+            onClick={toggleDrawer(false)}
+          >
+            <Menu className={classes.menuIcon} />
+          </ListItemIcon>
+        </ListItem>
+        <ListItem>
+          <ListItemText
+            classes={{ primary: classes.mobileMenuText }}
+            primary="STATISTICS"
+          />
+        </ListItem>
+        <ListItem className={classes.mobileMenuSearch} key="Search">
+          <InputBase
+            className={classes.searchInput}
+            placeholder="Search with ID"
+            inputProps={{ maxLength: 12, "aria-label": "Search with ID" }}
+            inputRef={searchInputRef}
+          />
+          <IconButton
+            type="submit"
+            className={classes.searchButton}
+            aria-label="search"
+            onClick={handleSearchButtonClick}
+          >
+            <Search />
+          </IconButton>
+        </ListItem>
+        <ListItem button key="Drafts">
+          <ListItemIcon>
+            <MailIcon />
+          </ListItemIcon>
+          <ListItemText primary="Drafts" />
+        </ListItem>
       </List>
       <Divider />
     </div>
@@ -207,7 +252,14 @@ const Header = () => {
       <div className={classes.mobileMenu}>
         <Menu className={classes.menuIcon} onClick={toggleDrawer(true)} />
       </div>
-      <Drawer anchor="right" open={openDrawer} onClose={toggleDrawer(false)}>
+      <Drawer
+        classes={{
+          paper: classes.drawer,
+        }}
+        anchor="right"
+        open={openDrawer}
+        onClose={toggleDrawer(false)}
+      >
         {list()}
       </Drawer>
       <Snackbar open={openError} autoHideDuration={4000} onClose={closeError}>

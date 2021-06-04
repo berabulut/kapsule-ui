@@ -10,7 +10,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../styles/theme";
 import "../styles/globals.css";
 
-import { Header, Footer } from "@/components/layout";
+import { Header, Footer } from "@/components/Layout";
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
