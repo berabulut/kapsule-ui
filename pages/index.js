@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       width: "100%",
       fontSize: "1.1rem",
-      marginTop: "4px"
+      marginTop: "4px",
     },
   },
   input: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1rem",
       height: "50px",
       width: "100%",
-      marginBottom: "16px"
+      marginBottom: "16px",
     },
   },
   button: {
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "24px",
     width: "100%",
     [theme.breakpoints.down("xs")]: {
-      marginTop: "4px"
+      marginTop: "4px",
     },
   },
   inputWrapper: {
@@ -274,12 +274,21 @@ export async function getServerSideProps({ req, res }) {
   const cookies = new Cookies(req, res);
   const links = cookies.get("links");
 
-  return {
-    props: {
-      namespacesRequired: ["common", "footer"],
-      links: links ? JSON.parse(decodeURIComponent(links)) : null,
-    },
-  };
+  try {
+    return {
+      props: {
+        namespacesRequired: ["common", "footer"],
+        links: links ? JSON.parse(decodeURIComponent(links)) : null,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        namespacesRequired: ["common", "footer"],
+        links: null,
+      },
+    };
+  }
 }
 
 export default withTranslation("common")(Home);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import {
   Typography,
@@ -7,10 +7,12 @@ import {
   Divider,
   ListItem,
   InputBase,
+  IconButton,
+  Snackbar,
 } from "@material-ui/core";
 import { makeStyles, fade } from "@material-ui/core/styles";
-
 import { Menu, Link, Search, GitHub } from "@material-ui/icons";
+import Alert from "@/components/Alert";
 
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
@@ -43,9 +45,6 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       cursor: "pointer",
     },
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: "24px",
-    },
     [theme.breakpoints.down("xs")]: {
       marginLeft: "8px",
       marginRight: "8px",
@@ -72,58 +71,34 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "40px",
   },
   search: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    color: "#c5c4c4",
-    zIndex: "99",
-    padding: theme.spacing(0, 1),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
+    padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#F5F5F5",
+    height: "48px",
   },
   searchInput: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
     color: "#808080",
-    backgroundColor: "#F5F5F5",
     fontWeight: "500",
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
+  },
+  searchButton: {
+    padding: 10,
+    color: "#c5c4c4",
   },
   gitIcon: {
     color: "#00ADB5",
-    [theme.breakpoints.down("lg")]: {
-      paddingLeft: "48px",
-    },
+    marginLeft: "48px",
     [theme.breakpoints.down("md")]: {
-      paddingLeft: "24px",
+      marginLeft: "24px",
     },
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: "24px",
-      display: "none"
+      marginLeft: "24px",
+      display: "none",
+    },
+    "&:hover": {
+      cursor: "pointer",
     },
   },
 }));
@@ -131,8 +106,11 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const router = useRouter();
+  const searchInputRef = useRef();
 
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [alert, setAlert] = useState({});
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -143,6 +121,30 @@ const Header = () => {
     }
 
     setOpenDrawer(open);
+  };
+
+  const handleSearchButtonClick = () => {
+    const input = searchInputRef.current.value;
+    if (input.length > 12) {
+      setAlert({ type: "warning", text: "ID must be shorter!" });
+      setOpenError(true);
+      return;
+    }
+    if (input.length < 8) {
+      setAlert({ type: "warning", text: "ID is too short!" });
+      setOpenError(true);
+      return;
+    }
+
+    router.push("/stats/" + input);
+  };
+
+  const closeError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenError(false);
   };
 
   const list = () => (
@@ -178,19 +180,29 @@ const Header = () => {
       </Typography>
       <div style={{ flex: 1 }}></div>
       <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <Search />
-        </div>
         <InputBase
+          className={classes.searchInput}
           placeholder="Search with ID"
-          classes={{
-            input: classes.searchInput,
-          }}
-          inputProps={{ "aria-label": "search" }}
+          inputProps={{ maxLength: 12, "aria-label": "Search with ID" }}
+          inputRef={searchInputRef}
         />
+        <IconButton
+          type="submit"
+          className={classes.searchButton}
+          aria-label="search"
+          onClick={handleSearchButtonClick}
+        >
+          <Search />
+        </IconButton>
       </div>
       <div className={classes.gitIcon}>
-        <GitHub />
+        <a
+          href="https://github.com/berabulut/kapsule"
+          target="_blank"
+          rel="noopener"
+        >
+          <GitHub />
+        </a>
       </div>
       <div className={classes.mobileMenu}>
         <Menu className={classes.menuIcon} onClick={toggleDrawer(true)} />
@@ -198,6 +210,11 @@ const Header = () => {
       <Drawer anchor="right" open={openDrawer} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
+      <Snackbar open={openError} autoHideDuration={4000} onClose={closeError}>
+        <Alert onClose={closeError} severity={alert.type}>
+          {alert.text}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

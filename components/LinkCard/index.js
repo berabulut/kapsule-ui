@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "12px",
     width: "100%",
     border: "solid 2px #F5F5F5",
+    boxShadow: "0px 4px 12px rgb(0 0 0 / 5%)",
     borderRadius: "4px",
   },
   linkTitle: {
