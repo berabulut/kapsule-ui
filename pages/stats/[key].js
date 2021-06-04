@@ -141,7 +141,8 @@ const Stats = ({ record }) => {
     }
 
     arr[0].data = arr[0].data.slice(arr[0].data.length - 5, arr[0].data.length);
-  
+ 
+
     setClicksChartData(arr);
     setBrowserChartData(browserStatistics(record.Visits));
     setDevicesChartData(deviceStatistics(record.Visits));
@@ -213,7 +214,7 @@ const Stats = ({ record }) => {
           <Grid
             item
             xs={11}
-            sm={5}
+            md={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >
@@ -236,7 +237,7 @@ const Stats = ({ record }) => {
           <Grid
             item
             xs={11}
-            sm={5}
+            md={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >
@@ -262,7 +263,7 @@ const Stats = ({ record }) => {
           <Grid
             item
             xs={11}
-            sm={5}
+            md={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >
@@ -281,7 +282,7 @@ const Stats = ({ record }) => {
           <Grid
             item
             xs={11}
-            sm={5}
+            md={5}
             className={classes.chartWrapper}
             style={{ paddingLeft: "8px" }}
           >

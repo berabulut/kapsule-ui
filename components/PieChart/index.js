@@ -24,7 +24,7 @@ const PieChart = ({ data, colors, innerRadius, padAngle, legends }) => {
         arcLabelsSkipAngle={10}
         arcLabelsTextColor="#ffffff"
         arcLinkLabels
-        motionConfig="slow"
+        motionConfig="gentle"
         defs={[
           {
             id: "dots",
@@ -55,7 +55,7 @@ const PieChart = ({ data, colors, innerRadius, padAngle, legends }) => {
                   direction: "row",
                   justify: false,
                   translateX: 0,
-                  translateY: 44,
+                  translateY: 50,
                   itemsSpacing: 5,
                   itemWidth: 85,
                   itemHeight: 18,
