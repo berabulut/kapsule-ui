@@ -2,10 +2,10 @@ import { getStats } from "api";
 import { useEffect, useState } from "react";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import ClicksChart from "@/components/ClicksChart";
-import PieChart from "@/components/PieChart";
-import MapChart from "@/components/MapChart";
-import DetailsCard from "@/components/DetailsCard";
+import ClicksChart from "@./components/ClicksChart";
+import PieChart from "@./components/PieChart";
+import MapChart from "@./components/MapChart";
+import DetailsCard from "@./components/DetailsCard";
 import styles from "@./styles/Home.module.css";
 import { parseTimeStamp } from "@./helpers/date";
 import {

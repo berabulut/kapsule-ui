@@ -23,7 +23,7 @@ import {
   Sort,
   Twitter,
 } from "@material-ui/icons";
-import Alert from "@/components/Alert";
+import Alert from "@./components/Alert";
 
 const Header = () => {
   const classes = headerStyles();
