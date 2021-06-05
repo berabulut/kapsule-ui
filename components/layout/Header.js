@@ -13,10 +13,17 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Menu, Link, Search, GitHub, Close } from "@material-ui/icons";
+import {
+  Menu,
+  Link,
+  Search,
+  GitHub,
+  Home,
+  Mail,
+  Sort,
+  Twitter,
+} from "@material-ui/icons";
 import Alert from "@/components/Alert";
-
-import MailIcon from "@material-ui/icons/Mail";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -103,9 +110,15 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: "100%",
+    height: "auto",
   },
   list: {
     width: "100%",
+  },
+  mobileMenuIcon: {
+    fontSize: "40px",
+    color: "rgba(0, 0, 0, 0.75)",
+    transform: "rotate( -180deg)",
   },
   mobileMenuSearch: {
     width: "calc(100% - 32px)",
@@ -120,8 +133,25 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
     fontFamily: "Lato",
     marginTop: "16px",
-    fontSize: "1.5rem",
+    fontSize: "1.75rem",
     textAlign: "center",
+    color: "rgba(0, 0, 0, 0.75)",
+  },
+  listText: {
+    fontWeight: "600",
+    fontFamily: "Lato",
+    fontSize: "1.15rem",
+    color: "rgba(0, 0, 0, 0.75)",
+  },
+  listIcon: {
+    color: "rgba(0, 0, 0, 0.65)",
+  },
+  contactIcon: {
+    color: "#00ADB5",
+    fontSize: "2rem",
+    marginTop: "24px",
+    marginBottom: "24px",
+    marginRight: "48px",
   },
 }));
 
@@ -177,7 +207,7 @@ const Header = () => {
             style={{ justifyContent: "flex-end" }}
             onClick={toggleDrawer(false)}
           >
-            <Menu className={classes.menuIcon} />
+            <Sort className={classes.mobileMenuIcon} />
           </ListItemIcon>
         </ListItem>
         <ListItem>
@@ -202,14 +232,31 @@ const Header = () => {
             <Search />
           </IconButton>
         </ListItem>
-        <ListItem button key="Drafts">
-          <ListItemIcon>
-            <MailIcon />
+        <ListItem button key="Home">
+          <ListItemIcon className={classes.listIcon}>
+            <Home />
           </ListItemIcon>
-          <ListItemText primary="Drafts" />
+          <ListItemText
+            classes={{ primary: classes.listText }}
+            primary="HOME"
+          />
+        </ListItem>
+        <Divider />
+        <ListItem button key="Contact">
+          <ListItemIcon className={classes.listIcon}>
+            <Mail />
+          </ListItemIcon>
+          <ListItemText
+            classes={{ primary: classes.listText }}
+            primary="CONTACT"
+          />
+        </ListItem>
+        <Divider />
+        <ListItem style={{ justifyContent: "center" }}>
+          <GitHub className={classes.contactIcon} />
+          <Twitter className={classes.contactIcon} />
         </ListItem>
       </List>
-      <Divider />
     </div>
   );
 
@@ -256,7 +303,7 @@ const Header = () => {
         classes={{
           paper: classes.drawer,
         }}
-        anchor="right"
+        anchor="top"
         open={openDrawer}
         onClose={toggleDrawer(false)}
       >
