@@ -9,6 +9,14 @@
   margin: auto;
 }
 
+.footerContainer {
+  max-width: 900px;
+  padding: 0 0.5rem;
+  margin: auto;
+  padding-bottom: 32px;
+  padding-top: 48px;
+}
+
 .detailsContainer {
   max-width: 1200px;
   width: 100%;
@@ -133,6 +141,11 @@
   .container {
     padding: 0 48px;
   }
+  .footerContainer {
+    padding: 0 48px;
+    padding-bottom: 32px;
+    padding-top: 48px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -145,5 +158,10 @@
   }
   .container {
     padding: 0 32px;
+  }
+  .footerContainer {
+    padding: 0 48px;
+    padding-bottom: 32px;
+    padding-top: 48px;
   }
 }

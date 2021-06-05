@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "0px",
     color: "#00ADB5",
     fontWeight: "600",
+    wordBreak: "break-all",
     [theme.breakpoints.down("xs")]: {
       textAlign: "center",
       marginTop: "8px"
