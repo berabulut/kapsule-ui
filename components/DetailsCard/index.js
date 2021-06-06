@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Divider, Button } from "@material-ui/core";
+import { Typography, Snackbar, IconButton } from "@material-ui/core";
+import { FileCopy } from "@material-ui/icons";
 import { parseTimeStamp } from "@./helpers/date";
+import Alert from "@./components/Alert";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     marginBottom: "4px",
     wordWrap: "break-word",
-    fontFamily: "Lato"
+    fontFamily: "Lato",
     // whiteSpace: "nowrap",
     // overflow: "hidden",
     // textOverflow: "ellipsis",
@@ -30,7 +32,14 @@ const useStyles = makeStyles((theme) => ({
   strong: {
     color: "#222831",
     fontSize: "1.09rem",
-    paddingRight: "5px"
+    paddingRight: "5px",
+  },
+  copyButton: {
+    padding: "3px",
+    color: "#C1C1C1",
+    transform: "scale(0.8)",
+    marginLeft: "12px",
+    marginTop: "-4px",
   },
 }));
 
@@ -39,6 +48,7 @@ const DetailsCard = ({ record }) => {
   const [date, setDate] = useState();
   const [lastVisit, setLastVisit] = useState();
   const [shortLink, setShortLink] = useState();
+  const [openAlert, setOpenAlert] = useState(false);
 
   useEffect(() => {
     if (!record.CreatedAt) return;
@@ -68,6 +78,18 @@ const DetailsCard = ({ record }) => {
     setShortLink(process.env.redirectingURL + "/" + record.Key);
   }, [record.Key]);
 
+  const handleCopyButtonClick = () => {
+    navigator.clipboard.writeText(shortLink);
+    setOpenAlert(true);
+  };
+
+  const closeAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
+  };
+
   return (
     <div className={classes.container}>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
@@ -85,6 +107,13 @@ const DetailsCard = ({ record }) => {
         <a href={shortLink} target="_blank" rel="noopener noreferrer">
           {shortLink}
         </a>
+        <IconButton
+          className={classes.copyButton}
+          aria-label="copy"
+          onClick={handleCopyButtonClick}
+        >
+          <FileCopy />
+        </IconButton>
       </Typography>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
         <strong className={classes.strong}>Created At : </strong>
@@ -94,6 +123,19 @@ const DetailsCard = ({ record }) => {
         <strong className={classes.strong}>Last Time Visited : </strong>
         {lastVisit && lastVisit[0] + " " + lastVisit[1]}
       </Typography>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={closeAlert}
+      >
+        <Alert onClose={closeAlert} severity="success">
+          Copied
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
