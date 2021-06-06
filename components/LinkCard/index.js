@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Divider, Button } from "@material-ui/core";
-import AssessmentIcon from "@material-ui/icons/Assessment";
+import {
+  Typography,
+  Grid,
+  Divider,
+  Button,
+  IconButton,
+  Snackbar,
+} from "@material-ui/core";
+import { FileCopy, Assessment } from "@material-ui/icons";
+import Alert from "@./components/Alert";
 import { parseTimeStamp } from "@./helpers/date";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#808080",
     wordWrap: "break-word",
     [theme.breakpoints.down("xs")]: {
-      marginTop: "8px"
+      marginTop: "8px",
     },
   },
   shortLink: {
@@ -49,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     wordBreak: "break-all",
     [theme.breakpoints.down("xs")]: {
       textAlign: "center",
-      marginTop: "8px"
+      marginTop: "8px",
     },
   },
   clicks: {
@@ -79,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "center",
       marginTop: "16px",
       marginBottom: "8px",
-      width: "100%"
+      width: "100%",
     },
   },
   dateContainer: {
@@ -93,6 +101,16 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: "3px",
     },
   },
+  copyButton: {
+    padding: "3px",
+    color: "#C1C1C1",
+    transform: "scale(0.8)",
+    marginLeft: "12px",
+    marginTop: "-4px",
+  },
+  closeButton: {
+    padding: theme.spacing(0.5),
+  },
 }));
 
 const LinkCard = ({ record }) => {
@@ -100,9 +118,22 @@ const LinkCard = ({ record }) => {
   const router = useRouter();
   const [date, setDate] = useState();
   const [shortLink, setShortLink] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
 
   const handleClick = () => {
     router.push("/stats/" + record.Key);
+  };
+
+  const handleCopyButtonClick = () => {
+    navigator.clipboard.writeText(shortLink);
+    setOpenAlert(true);
+  };
+
+  const closeAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
   };
 
   useEffect(() => {
@@ -153,7 +184,7 @@ const LinkCard = ({ record }) => {
         </Grid>
         <Divider className={classes.divider} />
         <Grid item style={{ flexGrow: "1" }}>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ display: "flex" }}>
             <a href={shortLink} target="_blank" rel="noopener noreferrer">
               <Typography
                 variant="body2"
@@ -163,6 +194,13 @@ const LinkCard = ({ record }) => {
                 {shortLink}
               </Typography>
             </a>
+            <IconButton
+              className={classes.copyButton}
+              aria-label="copy"
+              onClick={handleCopyButtonClick}
+            >
+              <FileCopy />
+            </IconButton>
           </Grid>
           <Grid item>
             <Typography
@@ -174,19 +212,32 @@ const LinkCard = ({ record }) => {
             </Typography>
           </Grid>
         </Grid>
-        <div  className={classes.buttonContainer}>
+        <div className={classes.buttonContainer}>
           <Button
             onClick={handleClick}
             variant="contained"
             color="primary"
             size="large"
             className={classes.button}
-            startIcon={<AssessmentIcon />}
+            startIcon={<Assessment />}
           >
             Details
           </Button>
         </div>
       </Grid>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={closeAlert}
+      >
+        <Alert onClose={closeAlert} severity="success">
+          Copied
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
