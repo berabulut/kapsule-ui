@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Snackbar, IconButton } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
+import { QR } from "@/components/Icons";
 import { parseTimeStamp } from "@./helpers/date";
 import Alert from "@./components/Alert";
 
@@ -29,6 +30,17 @@ const useStyles = makeStyles((theme) => ({
     //   wordWrap: "break-word",
     // },
   },
+  shortLinkTitle: {
+    color: "#808080",
+    fontSize: "1rem",
+    marginBottom: "4px",
+    wordWrap: "break-word",
+    fontFamily: "Lato",
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
+  },
   strong: {
     color: "#222831",
     fontSize: "1.09rem",
@@ -40,6 +52,13 @@ const useStyles = makeStyles((theme) => ({
     transform: "scale(0.8)",
     marginLeft: "12px",
     marginTop: "-4px",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "0px",
+      marginRight: "12px"
+    },
+  },
+  qrcode: {
+    display: "none",
   },
 }));
 
@@ -102,18 +121,27 @@ const DetailsCard = ({ record }) => {
           {record.Value}
         </a>
       </Typography>
-      <Typography variant="subtitle1" className={classes.fieldTitle}>
+      <Typography variant="subtitle1" className={classes.shortLinkTitle}>
         <strong className={classes.strong}>Shortened Link : </strong>
         <a href={shortLink} target="_blank" rel="noopener noreferrer">
           {shortLink}
         </a>
-        <IconButton
-          className={classes.copyButton}
-          aria-label="copy"
-          onClick={handleCopyButtonClick}
-        >
-          <FileCopy />
-        </IconButton>
+        <div>
+          <IconButton
+            className={classes.copyButton}
+            aria-label="copy"
+            onClick={handleCopyButtonClick}
+          >
+            <FileCopy />
+          </IconButton>
+          <IconButton
+            className={classes.copyButton}
+            aria-label="copy"
+            onClick={handleCopyButtonClick}
+          >
+            <QR />
+          </IconButton>
+        </div>
       </Typography>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
         <strong className={classes.strong}>Created At : </strong>
