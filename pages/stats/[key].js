@@ -1,6 +1,14 @@
 import { getStats } from "api";
 import { useEffect, useState } from "react";
-import { Typography, Grid } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  IconButton,
+  Fade,
+  Paper,
+  Popper,
+} from "@material-ui/core";
+import { HelpOutline } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import ClicksChart from "@./components/ClicksChart";
 import PieChart from "@./components/PieChart";
@@ -29,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       marginBottom: "0px",
       marginTop: "32px",
+      fontSize: "2.5rem",
     },
   },
   detailsWrapper: {
@@ -93,6 +102,50 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.4rem",
     },
   },
+  infoContainer: {
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "center",
+    [theme.breakpoints.down("xs")]: {
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+    },
+  },
+  infoText: {
+    fontWeight: 600,
+    color: "#222831",
+    marginTop: "96px",
+    fontSize: "2.5rem",
+    textAlign: "center",
+    letterSpacing: "-0.01562em",
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "0px",
+      marginTop: "32px",
+      paddingLeft: "16px",
+      paddingRight: "16px",
+      fontSize: "1.75rem",
+    },
+  },
+  infoButton: {
+    transform: "scale(1.25)",
+    marginLeft: "32px",
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: "0px",
+    },
+  },
+  popupText: {
+    padding: "8px 16px",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
+    },
+  },
+  paper: {
+    [theme.breakpoints.down("xs")]: {
+      width: "80%",
+      margin: "auto",
+    },
+  },
 }));
 
 const Stats = ({ record }) => {
@@ -104,6 +157,9 @@ const Stats = ({ record }) => {
   const [languagesChartData, setLanguagesChartData] = useState([]);
   const [mapData, setMapData] = useState();
   const [countryData, setCountryData] = useState();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openInfo, setOpenInfo] = useState(false);
 
   useEffect(() => {
     if (!record) return;
@@ -141,7 +197,6 @@ const Stats = ({ record }) => {
     }
 
     arr[0].data = arr[0].data.slice(arr[0].data.length - 5, arr[0].data.length);
- 
 
     setClicksChartData(arr);
     setBrowserChartData(browserStatistics(record.Visits));
@@ -155,6 +210,11 @@ const Stats = ({ record }) => {
     if (!mapData) return;
     setCountryData(countryStatistics(mapData));
   }, [mapData]);
+
+  const handleInfoButtonClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpenInfo(!openInfo);
+  };
 
   if (!record) {
     return (
@@ -201,138 +261,173 @@ const Stats = ({ record }) => {
             </div>
           </Grid>
         </Grid>
-        {/* HISTORY */}
-        <Grid container className={classes.chartWrapper}>
-          <Typography variant="h3" className={classes.sectionTitle}>
-            History
-          </Typography>
-          <ClicksChart data={clicksChartData} />
-        </Grid>
-        {/* OS - DEVICES */}
-        <Grid container style={{ justifyContent: "space-evenly" }}>
-          {/* OS */}
-          <Grid
-            item
-            xs={11}
-            md={5}
-            className={classes.chartWrapper}
-            style={{ paddingLeft: "8px" }}
-          >
-            <Typography variant="h3" className={classes.sectionTitle}>
-              OS
-            </Typography>
-            <PieChart
-              data={osChartData}
-              innerRadius={0}
-              colors="category10"
-              legends={[
-                {
-                  anchor: "bottom",
-                  direction: "row",
-                },
-              ]}
-            />
-          </Grid>
-          {/* DEVICES */}
-          <Grid
-            item
-            xs={11}
-            md={5}
-            className={classes.chartWrapper}
-            style={{ paddingLeft: "8px" }}
-          >
-            <Typography variant="h3" className={classes.sectionTitle}>
-              Devices
-            </Typography>
-            <PieChart
-              data={devicesChartData}
-              innerRadius={0}
-              colors="accent"
-              legends={[
-                {
-                  anchor: "bottom",
-                  direction: "row",
-                },
-              ]}
-            />
-          </Grid>
-        </Grid>
-        {/* BROWSERS - LANGUAGES */}
-        <Grid container style={{ justifyContent: "space-evenly" }}>
-          {/* BROWSERS */}
-          <Grid
-            item
-            xs={11}
-            md={5}
-            className={classes.chartWrapper}
-            style={{ paddingLeft: "8px" }}
-          >
-            <Typography variant="h3" className={classes.sectionTitle}>
-              Browsers
-            </Typography>
-            <PieChart
-              data={browserChartData}
-              innerRadius={0.7}
-              padAngle={1}
-              colors="set2"
-              legends={false}
-            />
-          </Grid>
-          {/* LANGUAGES */}
-          <Grid
-            item
-            xs={11}
-            md={5}
-            className={classes.chartWrapper}
-            style={{ paddingLeft: "8px" }}
-          >
-            <Typography variant="h3" className={classes.sectionTitle}>
-              Languages
-            </Typography>
-            <PieChart
-              data={languagesChartData}
-              innerRadius={0.7}
-              padAngle={1}
-              colors="dark2"
-            />
-          </Grid>
-        </Grid>
-        {/* GEO LOCATION */}
-        <Grid container className={classes.chartWrapper}>
-          <Grid item xs={12}>
-            <Typography
-              variant="h3"
-              className={classes.sectionTitle}
-              style={{ marginBottom: "14px", textAlign: "center" }}
-            >
-              Geo Location
-            </Typography>
-          </Grid>
-          <Grid item container className={classes.mapWrapper}>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={9}
-              style={{ marginTop: "24px", marginBottom: "48px" }}
-            >
-              <MapChart
-                data={mapData}
-                domain={[1, Math.ceil(record.Clicks) * 10]}
-              />
+        {record.Clicks > 0 && (
+          <>
+            <Grid container className={classes.chartWrapper}>
+              <Typography variant="h3" className={classes.sectionTitle}>
+                History
+              </Typography>
+              <ClicksChart data={clicksChartData} />
             </Grid>
-            <Grid item xs={12} sm={12} md={2}>
-              <ol>
-                {countryData &&
-                  countryData.length > 0 &&
-                  countryData.map((country, index) => {
-                    if (index > 5) return;
-                    return <li className={classes.listItem}>{country.name}</li>;
-                  })}
-              </ol>
+            {/* OS - DEVICES */}
+            <Grid container style={{ justifyContent: "space-evenly" }}>
+              {/* OS */}
+              <Grid
+                item
+                xs={11}
+                md={5}
+                className={classes.chartWrapper}
+                style={{ paddingLeft: "8px" }}
+              >
+                <Typography variant="h3" className={classes.sectionTitle}>
+                  OS
+                </Typography>
+                <PieChart
+                  data={osChartData}
+                  innerRadius={0}
+                  colors="category10"
+                  legends={[
+                    {
+                      anchor: "bottom",
+                      direction: "row",
+                    },
+                  ]}
+                />
+              </Grid>
+              {/* DEVICES */}
+              <Grid
+                item
+                xs={11}
+                md={5}
+                className={classes.chartWrapper}
+                style={{ paddingLeft: "8px" }}
+              >
+                <Typography variant="h3" className={classes.sectionTitle}>
+                  Devices
+                </Typography>
+                <PieChart
+                  data={devicesChartData}
+                  innerRadius={0}
+                  colors="accent"
+                  legends={[
+                    {
+                      anchor: "bottom",
+                      direction: "row",
+                    },
+                  ]}
+                />
+              </Grid>
             </Grid>
+            {/* BROWSERS - LANGUAGES */}
+            <Grid container style={{ justifyContent: "space-evenly" }}>
+              {/* BROWSERS */}
+              <Grid
+                item
+                xs={11}
+                md={5}
+                className={classes.chartWrapper}
+                style={{ paddingLeft: "8px" }}
+              >
+                <Typography variant="h3" className={classes.sectionTitle}>
+                  Browsers
+                </Typography>
+                <PieChart
+                  data={browserChartData}
+                  innerRadius={0.7}
+                  padAngle={1}
+                  colors="set2"
+                  legends={false}
+                />
+              </Grid>
+              {/* LANGUAGES */}
+              <Grid
+                item
+                xs={11}
+                md={5}
+                className={classes.chartWrapper}
+                style={{ paddingLeft: "8px" }}
+              >
+                <Typography variant="h3" className={classes.sectionTitle}>
+                  Languages
+                </Typography>
+                <PieChart
+                  data={languagesChartData}
+                  innerRadius={0.7}
+                  padAngle={1}
+                  colors="dark2"
+                />
+              </Grid>
+            </Grid>
+            {/* GEO LOCATION */}
+            <Grid container className={classes.chartWrapper}>
+              <Grid item xs={12}>
+                <Typography
+                  variant="h3"
+                  className={classes.sectionTitle}
+                  style={{ marginBottom: "14px", textAlign: "center" }}
+                >
+                  Geo Location
+                </Typography>
+              </Grid>
+              <Grid item container className={classes.mapWrapper}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={9}
+                  style={{ marginTop: "24px", marginBottom: "48px" }}
+                >
+                  <MapChart
+                    data={mapData}
+                    domain={[1, Math.ceil(record.Clicks) * 10]}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={2}>
+                  <ol>
+                    {countryData &&
+                      countryData.length > 0 &&
+                      countryData.map((country, index) => {
+                        if (index > 5) return;
+                        return (
+                          <li className={classes.listItem}>{country.name}</li>
+                        );
+                      })}
+                  </ol>
+                </Grid>
+              </Grid>
+            </Grid>
+          </>
+        )}
+        <Grid container>
+          <Grid item xs={12} className={classes.infoContainer}>
+            <Typography className={classes.infoText}>
+              No other stats to show
+            </Typography>
+            <IconButton
+              className={classes.infoButton}
+              aria-label="info"
+              onClick={handleInfoButtonClick}
+            >
+              <HelpOutline />
+            </IconButton>
           </Grid>
         </Grid>
+        <Popper
+          open={openInfo}
+          anchorEl={anchorEl}
+          placement="bottom"
+          transition
+        >
+          {({ TransitionProps }) => (
+            <Fade {...TransitionProps} timeout={350}>
+              <Paper className={classes.paper}>
+                <Typography className={classes.popupText}>
+                  Try clicking shortened link then reload this page.
+                </Typography>
+              </Paper>
+            </Fade>
+          )}
+        </Popper>
       </main>
     </div>
   );

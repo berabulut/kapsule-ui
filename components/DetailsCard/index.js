@@ -119,10 +119,12 @@ const DetailsCard = ({ record }) => {
         <strong className={classes.strong}>Created At : </strong>
         {date}
       </Typography>
-      <Typography variant="subtitle1" className={classes.fieldTitle}>
-        <strong className={classes.strong}>Last Time Visited : </strong>
-        {lastVisit && lastVisit[0] + " " + lastVisit[1]}
-      </Typography>
+      {record.Clicks > 0 && (
+        <Typography variant="subtitle1" className={classes.fieldTitle}>
+          <strong className={classes.strong}>Last Time Visited : </strong>
+          {lastVisit && lastVisit[0] + " " + lastVisit[1]}
+        </Typography>
+      )}
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
