@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Snackbar, IconButton } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "-4px",
     [theme.breakpoints.down("sm")]: {
       marginLeft: "0px",
-      marginRight: "12px"
+      marginRight: "12px",
     },
   },
   qrcode: {
@@ -64,6 +65,8 @@ const useStyles = makeStyles((theme) => ({
 
 const DetailsCard = ({ record }) => {
   const classes = useStyles();
+  const router = useRouter();
+
   const [date, setDate] = useState();
   const [lastVisit, setLastVisit] = useState();
   const [shortLink, setShortLink] = useState();
@@ -134,12 +137,10 @@ const DetailsCard = ({ record }) => {
           >
             <FileCopy />
           </IconButton>
-          <IconButton
-            className={classes.copyButton}
-            aria-label="copy"
-            onClick={handleCopyButtonClick}
-          >
-            <QR />
+          <IconButton className={classes.copyButton} aria-label="copy">
+            <a href={"/qrcode/" + record.Key} target="_blank" rel="noopener">
+              <QR />
+            </a>
           </IconButton>
         </div>
       </Typography>

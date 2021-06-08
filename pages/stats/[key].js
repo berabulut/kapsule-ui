@@ -41,7 +41,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   detailsWrapper: {
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "space-around",
+    },
   },
   clicksText: {
     fontWeight: "800",
@@ -261,7 +264,7 @@ const Stats = ({ record }) => {
             </div>
           </Grid>
         </Grid>
-        {record.Clicks > 0 && (
+        {record.Clicks > 0 ? (
           <>
             <Grid container className={classes.chartWrapper}>
               <Typography variant="h3" className={classes.sectionTitle}>
@@ -270,7 +273,7 @@ const Stats = ({ record }) => {
               <ClicksChart data={clicksChartData} />
             </Grid>
             {/* OS - DEVICES */}
-            <Grid container style={{ justifyContent: "space-evenly" }}>
+            <Grid container style={{ justifyContent: "space-around" }}>
               {/* OS */}
               <Grid
                 item
@@ -319,7 +322,7 @@ const Stats = ({ record }) => {
               </Grid>
             </Grid>
             {/* BROWSERS - LANGUAGES */}
-            <Grid container style={{ justifyContent: "space-evenly" }}>
+            <Grid container style={{ justifyContent: "space-around" }}>
               {/* BROWSERS */}
               <Grid
                 item
@@ -359,75 +362,80 @@ const Stats = ({ record }) => {
               </Grid>
             </Grid>
             {/* GEO LOCATION */}
-            <Grid container className={classes.chartWrapper}>
-              <Grid item xs={12}>
-                <Typography
-                  variant="h3"
-                  className={classes.sectionTitle}
-                  style={{ marginBottom: "14px", textAlign: "center" }}
-                >
-                  Geo Location
-                </Typography>
+            {mapData && mapData.length > 0 && (
+              <Grid container className={classes.chartWrapper}>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h3"
+                    className={classes.sectionTitle}
+                    style={{ marginBottom: "14px", textAlign: "center" }}
+                  >
+                    Geo Location
+                  </Typography>
+                </Grid>
+                <Grid item container className={classes.mapWrapper}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={9}
+                    style={{ marginTop: "24px", marginBottom: "48px" }}
+                  >
+                    <MapChart
+                      data={mapData}
+                      domain={[1, Math.ceil(record.Clicks) * 10]}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={2}>
+                    <ol>
+                      {countryData &&
+                        countryData.length > 0 &&
+                        countryData.map((country, index) => {
+                          if (index > 5) return;
+                          return (
+                            <li className={classes.listItem}>{country.name}</li>
+                          );
+                        })}
+                    </ol>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item container className={classes.mapWrapper}>
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={9}
-                  style={{ marginTop: "24px", marginBottom: "48px" }}
+            )}
+          </>
+        ) : (
+          <>
+            <Grid container>
+              <Grid item xs={12} className={classes.infoContainer}>
+                <Typography className={classes.infoText}>
+                  No other stats to show
+                </Typography>
+                <IconButton
+                  className={classes.infoButton}
+                  aria-label="info"
+                  onClick={handleInfoButtonClick}
                 >
-                  <MapChart
-                    data={mapData}
-                    domain={[1, Math.ceil(record.Clicks) * 10]}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={2}>
-                  <ol>
-                    {countryData &&
-                      countryData.length > 0 &&
-                      countryData.map((country, index) => {
-                        if (index > 5) return;
-                        return (
-                          <li className={classes.listItem}>{country.name}</li>
-                        );
-                      })}
-                  </ol>
-                </Grid>
+                  <HelpOutline />
+                </IconButton>
               </Grid>
             </Grid>
+            <Popper
+              open={openInfo}
+              anchorEl={anchorEl}
+              placement="bottom"
+              transition
+            >
+              {({ TransitionProps }) => (
+                <Fade {...TransitionProps} timeout={350}>
+                  <Paper className={classes.paper}>
+                    <Typography className={classes.popupText}>
+                      Try clicking shortened link then reload this page.
+                    </Typography>
+                  </Paper>
+                </Fade>
+              )}
+            </Popper>
           </>
         )}
-        <Grid container>
-          <Grid item xs={12} className={classes.infoContainer}>
-            <Typography className={classes.infoText}>
-              No other stats to show
-            </Typography>
-            <IconButton
-              className={classes.infoButton}
-              aria-label="info"
-              onClick={handleInfoButtonClick}
-            >
-              <HelpOutline />
-            </IconButton>
-          </Grid>
-        </Grid>
-        <Popper
-          open={openInfo}
-          anchorEl={anchorEl}
-          placement="bottom"
-          transition
-        >
-          {({ TransitionProps }) => (
-            <Fade {...TransitionProps} timeout={350}>
-              <Paper className={classes.paper}>
-                <Typography className={classes.popupText}>
-                  Try clicking shortened link then reload this page.
-                </Typography>
-              </Paper>
-            </Fade>
-          )}
-        </Popper>
       </main>
     </div>
   );

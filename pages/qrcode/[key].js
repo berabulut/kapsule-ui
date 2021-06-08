@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import QRCode from "qrcode.react";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   downloadButton: {
     marginTop: "50px",
-	color: "white",
-	backgroundColor: "#00ADB5",
+    color: "white",
+    backgroundColor: "#00ADB5",
   },
 }));
 
@@ -36,7 +36,7 @@ const QR = () => {
       e;
 
     /// the key here is to set the download attribute of the a tag
-    lnk.download = "test.png";
+    lnk.download = key;
 
     /// convert canvas content to data-uri for link. When download
     /// attribute is set the content pointed to by link will be
