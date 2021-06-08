@@ -1,5 +1,6 @@
-import { getStats } from "api";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { getStats } from "api";
 import {
   Typography,
   Grid,
@@ -14,6 +15,7 @@ import ClicksChart from "@./components/ClicksChart";
 import PieChart from "@./components/PieChart";
 import MapChart from "@./components/MapChart";
 import DetailsCard from "@./components/DetailsCard";
+import Custom404 from "../404";
 import styles from "@./styles/Home.module.css";
 import { parseTimeStamp } from "@./helpers/date";
 import {
@@ -153,6 +155,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Stats = ({ record }) => {
   const classes = useStyles();
+  const router = useRouter();
+
   const [clicksChartData, setClicksChartData] = useState();
   const [devicesChartData, setDevicesChartData] = useState([]);
   const [browserChartData, setBrowserChartData] = useState([]);
@@ -220,11 +224,7 @@ const Stats = ({ record }) => {
   };
 
   if (!record) {
-    return (
-      <div>
-        <h1>SOMETHING IS WRONG</h1>
-      </div>
-    );
+    return <Custom404 />;
   }
 
   return (

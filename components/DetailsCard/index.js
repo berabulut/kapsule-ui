@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Snackbar, IconButton } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
@@ -65,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 
 const DetailsCard = ({ record }) => {
   const classes = useStyles();
-  const router = useRouter();
 
   const [date, setDate] = useState();
   const [lastVisit, setLastVisit] = useState();
