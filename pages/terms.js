@@ -1,6 +1,6 @@
 import styles from "../styles/Policy.module.css";
 
-const Privacy = () => {
+const Terms = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Terms and Conditions of Use</h1>
@@ -121,4 +121,4 @@ const Privacy = () => {
   );
 };
 
-export default Privacy;
+export default Terms;
