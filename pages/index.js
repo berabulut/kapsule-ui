@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
-import { Typography, Snackbar, Grid } from "@material-ui/core";
+import { Typography, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { shortenURL, getMultipleRecords } from "@./api";
 import LinkCard from "@./components/LinkCard";
@@ -248,7 +248,25 @@ const Home = ({ t, links }) => {
         </div>
         <div style={{ marginTop: "8px", width: "100%", textAlign: "center" }}>
           <p className={classes.infoText}>
-            By using our service you accept the Terms of service and Privacy.
+            By using our service you accept the{" "}
+            <a
+              style={{ color: "#00ADB5" }}
+              target="_blank"
+              rel="noopener"
+              href="/terms"
+            >
+              Terms of service
+            </a>{" "}
+            and{" "}
+            <a
+              style={{ color: "#00ADB5" }}
+              target="_blank"
+              rel="noopener"
+              href="/privacy"
+            >
+              Privacy
+            </a>
+            .
           </p>
         </div>
         <div className={classes.linksContainer}>

@@ -25,9 +25,9 @@ const Footer = ({ t }) => {
               </Link>
             </Grid>
             <Grid item xs={12}>
-              <Link href="/">
+              <Link href="/contact">
                 <a>
-                  <Typography className={classes.item}>How it works</Typography>
+                  <Typography className={classes.item}>Contact</Typography>
                 </a>
               </Link>
             </Grid>
