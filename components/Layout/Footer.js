@@ -13,7 +13,7 @@ const Footer = ({ t }) => {
     <div className={classes.root}>
       <div className={styles.footerContainer}>
         <Grid container xs={12} spacing={4} className={classes.container}>
-          <Grid item container xs={5} sm={4}>
+          <Grid item container xs={12} sm={4}>
             <Grid item xs={12}>
               <Typography className={classes.title}>PROJECT</Typography>
             </Grid>
@@ -32,12 +32,12 @@ const Footer = ({ t }) => {
               </Link>
             </Grid>
           </Grid>
-          <Grid item xs={5} sm={4}>
+          <Grid item container xs={12} sm={4}>
             <Grid item xs={12}>
               <Typography className={classes.title}>LEGAL</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Link href="/">
+              <Link href="/terms">
                 <a>
                   <Typography className={classes.item}>
                     Terms of Service
@@ -46,7 +46,7 @@ const Footer = ({ t }) => {
               </Link>
             </Grid>
             <Grid item xs={12}>
-              <Link href="/">
+              <Link href="/privacy">
                 <a>
                   <Typography className={classes.item}>Privacy</Typography>
                 </a>

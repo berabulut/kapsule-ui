@@ -48,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "8px",
     },
   },
+  shortLinkContainer: {
+    display: "flex",
+    [theme.breakpoints.down("xs")]: {
+      justifyContent: "center"
+    },
+  },
   shortLink: {
     fontSize: "0.95rem",
     fontFamily: "Lato",
@@ -184,7 +190,7 @@ const LinkCard = ({ record }) => {
         </Grid>
         <Divider className={classes.divider} />
         <Grid item style={{ flexGrow: "1" }}>
-          <Grid item xs={12} style={{ display: "flex" }}>
+          <Grid item xs={12} className={classes.shortLinkContainer}>
             <a href={shortLink} target="_blank" rel="noopener noreferrer">
               <Typography
                 variant="body2"
