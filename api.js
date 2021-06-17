@@ -1,7 +1,10 @@
-export const shortenURL = async (url) => {
+export const shortenURL = async (url, options) => {
   const res = await fetch(process.env.apiURL + "/shorten", {
     body: JSON.stringify({
       url: url,
+      options_enabled: options.checked,
+      duration: options.duration,
+      message: options.message
     }),
     headers: {
       "Content-Type": "application/json",

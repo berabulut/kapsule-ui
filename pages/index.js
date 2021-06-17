@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { i18n, withTranslation } from "@./i18n";
-import { Typography, Snackbar } from "@material-ui/core";
+import { Typography, Snackbar, IconButton, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import SettingsIcon from "@material-ui/icons/Settings";
 import { shortenURL, getMultipleRecords } from "@./api";
 import LinkCard from "@./components/LinkCard";
+import Options from "@./components/Options";
 import Alert from "@./components/Alert";
 import styles from "../styles/Home.module.css";
 import Cookies from "cookies";
@@ -109,7 +111,37 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
     },
   },
+  privacyContainer: {
+    marginTop: "16px",
+    width: "100%",
+    textAlign: "center",
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column-reverse",
+    },
+  },
+  infoTextWrapper: {
+    flexGrow: "3",
+  },
+  settingsButtonWrapper: {
+    flexGrow: "2",
+  },
+  optionsContainer: {
+    width: "auto",
+  },
 }));
+
+function isValidHttpUrl(string) {
+  let url;
+  
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}
 
 const Home = ({ t, links }) => {
   const classes = useStyles();
@@ -119,6 +151,8 @@ const Home = ({ t, links }) => {
   const [records, setRecords] = useState([]);
   const [openError, setOpenError] = useState(false);
   const [alert, setAlert] = useState({});
+  const [showOptions, setShowOptions] = useState(false);
+  const [options, setOptions] = useState({});
 
   const buttonClick = async () => {
     if (!userInput.length > 0) {
@@ -138,7 +172,13 @@ const Home = ({ t, links }) => {
       return;
     }
 
-    const res = await shortenURL(userInput);
+    if(!isValidHttpUrl(userInput)) {
+      setAlert({ type: "warning", text: "Please provide a valid URL" });
+      setOpenError(true);
+      return
+    }
+
+    const res = await shortenURL(userInput, options);
 
     if (res?.error) {
       setAlert({ type: "error", text: res.error + " " + res.text });
@@ -226,6 +266,7 @@ const Home = ({ t, links }) => {
         <Typography className={classes.subText} variant="h3">
           {t("subTitle")}
         </Typography>
+        {/* input - button */}
         <div className={classes.inputWrapper}>
           <input
             value={userInput}
@@ -246,29 +287,50 @@ const Home = ({ t, links }) => {
             {buttonText}
           </button>
         </div>
-        <div style={{ marginTop: "8px", width: "100%", textAlign: "center" }}>
-          <p className={classes.infoText}>
-            By using our service you accept the{" "}
-            <a
-              style={{ color: "#00ADB5" }}
-              target="_blank"
-              rel="noopener"
-              href="/terms"
-            >
-              Terms of service
-            </a>{" "}
-            and{" "}
-            <a
-              style={{ color: "#00ADB5" }}
-              target="_blank"
-              rel="noopener"
-              href="/privacy"
-            >
-              Privacy
-            </a>
-            .
-          </p>
+        {/* options */}
+        <div
+          className={classes.optionsContainer}
+          style={{ marginTop: showOptions && "16px" }}
+        >
+          <Collapse in={showOptions}>
+            <Options setOptions={setOptions} />
+          </Collapse>
         </div>
+        {/* privacy-terms */}
+        <div className={classes.privacyContainer}>
+          <div className={classes.infoTextWrapper}>
+            <p className={classes.infoText}>
+              By using our service you accept the{" "}
+              <a
+                style={{ color: "#00ADB5" }}
+                target="_blank"
+                rel="noopener"
+                href="/terms"
+              >
+                Terms of service
+              </a>{" "}
+              and{" "}
+              <a
+                style={{ color: "#00ADB5" }}
+                target="_blank"
+                rel="noopener"
+                href="/privacy"
+              >
+                Privacy
+              </a>
+              .
+            </p>
+          </div>
+          <div className={classes.settingsButtonWrapper}>
+            <IconButton
+              onClick={() => setShowOptions(!showOptions)}
+              aria-label="settings"
+            >
+              <SettingsIcon />
+            </IconButton>
+          </div>
+        </div>
+        {/* link cards */}
         <div className={classes.linksContainer}>
           {records &&
             records.length > 0 &&
