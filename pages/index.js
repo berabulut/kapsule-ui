@@ -131,6 +131,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function isValidHttpUrl(string) {
+  let url;
+  
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+
 const Home = ({ t, links }) => {
   const classes = useStyles();
   const [userInput, setUserInput] = useState("");
@@ -140,6 +152,7 @@ const Home = ({ t, links }) => {
   const [openError, setOpenError] = useState(false);
   const [alert, setAlert] = useState({});
   const [showOptions, setShowOptions] = useState(false);
+  const [options, setOptions] = useState({});
 
   const buttonClick = async () => {
     if (!userInput.length > 0) {
@@ -159,7 +172,14 @@ const Home = ({ t, links }) => {
       return;
     }
 
-    const res = await shortenURL(userInput);
+    if(!isValidHttpUrl(userInput)) {
+      console.log('girdi')
+      setAlert({ type: "warning", text: "Please provide a valid URL" });
+      setOpenError(true);
+      return
+    }
+
+    const res = await shortenURL(userInput, options);
 
     if (res?.error) {
       setAlert({ type: "error", text: res.error + " " + res.text });
@@ -274,7 +294,7 @@ const Home = ({ t, links }) => {
           style={{ marginTop: showOptions && "16px" }}
         >
           <Collapse in={showOptions}>
-            <Options />
+            <Options setOptions={setOptions} />
           </Collapse>
         </div>
         {/* privacy-terms */}
