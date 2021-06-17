@@ -9,7 +9,7 @@ import {
   Paper,
   Popper,
 } from "@material-ui/core";
-import { HelpOutline } from "@material-ui/icons";
+import { HelpOutline, RemoveCircleRounded } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import ClicksChart from "@./components/ClicksChart";
 import PieChart from "@./components/PieChart";
@@ -179,13 +179,13 @@ const Stats = ({ record }) => {
         data: [],
       },
     ];
-    for (let i = 0; i < record.Visits.length; i++) {
-      const visit = record.Visits[i];
-      arr[0].data.push({
+
+    arr[0].data = record.Visits.map((visit) => {
+      return {
         x: parseTimeStamp(visit.Date),
         y: visit.Clicks,
-      });
-    }
+      };
+    });
 
     if (record.Visits.length === 0) {
       arr[0].data.push({
@@ -203,7 +203,12 @@ const Stats = ({ record }) => {
       }
     }
 
-    arr[0].data = arr[0].data.slice(arr[0].data.length - 5, arr[0].data.length);
+    if (record.Visits.length > 5) {
+      arr[0].data = arr[0].data.slice(
+        arr[0].data.length - 5,
+        arr[0].data.length
+      );
+    }
 
     setClicksChartData(arr);
     setBrowserChartData(browserStatistics(record.Visits));
