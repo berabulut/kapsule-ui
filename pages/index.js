@@ -173,7 +173,6 @@ const Home = ({ t, links }) => {
     }
 
     if(!isValidHttpUrl(userInput)) {
-      console.log('girdi')
       setAlert({ type: "warning", text: "Please provide a valid URL" });
       setOpenError(true);
       return

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Snackbar, IconButton } from "@material-ui/core";
-import { FileCopy } from "@material-ui/icons";
+import { FileCopy, GetApp } from "@material-ui/icons";
 import { QR } from "@/components/Icons";
 import { parseTimeStamp } from "@./helpers/date";
 import Alert from "@./components/Alert";
@@ -13,8 +13,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "12px",
     marginBottom: "12px",
     width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      paddingRight: "12px",
+    },
     [theme.breakpoints.down("xs")]: {
       padding: "16px",
+      paddingRight: "12px",
     },
   },
   fieldTitle: {
@@ -69,6 +73,7 @@ const DetailsCard = ({ record }) => {
   const [lastVisit, setLastVisit] = useState();
   const [shortLink, setShortLink] = useState();
   const [openAlert, setOpenAlert] = useState(false);
+  const [json, setJSON] = useState("");
 
   useEffect(() => {
     if (!record.CreatedAt) return;
@@ -98,6 +103,11 @@ const DetailsCard = ({ record }) => {
     setShortLink(process.env.redirectingURL + "/" + record.Key);
   }, [record.Key]);
 
+  useEffect(() => {
+    delete record.ID
+    setJSON(record)
+  }, [record])
+
   const handleCopyButtonClick = () => {
     navigator.clipboard.writeText(shortLink);
     setOpenAlert(true);
@@ -112,6 +122,15 @@ const DetailsCard = ({ record }) => {
 
   return (
     <div className={classes.container}>
+      <IconButton
+        href={`data:text/json;charset=utf-8,${encodeURIComponent(
+          JSON.stringify(json)
+        )}`}
+        download={`${record.Key}.json`}
+        style={{ float: "right" }}
+      >
+        <GetApp />
+      </IconButton>
       <Typography variant="subtitle1" className={classes.fieldTitle}>
         <strong className={classes.strong}>Page Title : </strong>
         {record.Title}

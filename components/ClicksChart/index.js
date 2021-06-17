@@ -23,11 +23,6 @@ const ClicksChart = (props) => {
     setData(props.data);
   }, [props.data]);
 
-  useEffect(() => {
-    // console.log(data)
-    // console.log(props.data)
-  }, [data])
-
   return (
     <div
       style={{ width: "100%", height: "400px" }}
