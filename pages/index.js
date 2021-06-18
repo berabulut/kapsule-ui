@@ -133,11 +133,11 @@ const useStyles = makeStyles((theme) => ({
 
 function isValidHttpUrl(string) {
   let url;
-  
+
   try {
     url = new URL(string);
   } catch (_) {
-    return false;  
+    return false;
   }
 
   return url.protocol === "http:" || url.protocol === "https:";
@@ -172,10 +172,10 @@ const Home = ({ t, links }) => {
       return;
     }
 
-    if(!isValidHttpUrl(userInput)) {
+    if (!isValidHttpUrl(userInput)) {
       setAlert({ type: "warning", text: "Please provide a valid URL" });
       setOpenError(true);
-      return
+      return;
     }
 
     const res = await shortenURL(userInput, options);
