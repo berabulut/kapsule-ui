@@ -149,7 +149,7 @@ const LinkCard = ({ record }) => {
 
   useEffect(() => {
     if (!record.Key) return;
-    if (process.env.prod) {
+    if (process.env.prod === "true") {
       setShortLink(
         window.location.origin +
           "/" +

@@ -130,7 +130,7 @@ const QR = () => {
 
   useEffect(() => {
     if (!key) return;
-    if (process.env.prod) {
+    if (process.env.prod === "true") {
       setUrl(
         window.location.origin + "/" + process.env.redirectingURL + "/" + key
       );

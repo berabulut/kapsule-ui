@@ -196,7 +196,7 @@ const Home = ({ t, links }) => {
 
     if (res.id) {
       let shortURL;
-      if (process.env.prod) {
+      if (process.env.prod === "true") {
         shortURL =
           window.location.origin +
           "/" +
