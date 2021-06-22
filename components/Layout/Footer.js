@@ -18,7 +18,7 @@ const Footer = ({ t }) => {
               <Typography className={classes.title}>PROJECT</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Link href="/">
+              <Link href="/about">
                 <a>
                   <Typography className={classes.item}>About</Typography>
                 </a>
@@ -53,7 +53,7 @@ const Footer = ({ t }) => {
               </Link>
             </Grid>
           </Grid>
-          <Grid item xs={5} sm={4} className={classes.iconContainer}>
+          <Grid item xs={12} sm={4} className={classes.iconContainer}>
             <div className={classes.icon}>
               <a
                 href="https://twitter.com/berabulut"

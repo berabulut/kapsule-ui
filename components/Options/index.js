@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   switchText: {
     fontWeight: 500,
     marginRight: "16px",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.95rem"
+    },
   },
   slider: {
     paddingTop: "26px",

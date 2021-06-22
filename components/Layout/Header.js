@@ -22,6 +22,7 @@ import {
   Mail,
   Sort,
   Twitter,
+  Info
 } from "@material-ui/icons";
 import Alert from "@./components/Alert";
 
@@ -254,10 +255,20 @@ const Header = () => {
           />
         </ListItem>
         <Divider />
+        <ListItem button key="About" onClick={() => handleListButtonClick("/about")}>
+          <ListItemIcon className={classes.listIcon}>
+            <Info />
+          </ListItemIcon>
+          <ListItemText
+            classes={{ primary: classes.listText }}
+            primary="ABOUT"
+          />
+        </ListItem>
+        <Divider />
         <ListItem
           button
           key="Contact"
-          onClick={() => handleListButtonClick("/")}
+          onClick={() => handleListButtonClick("/contact")}
         >
           <ListItemIcon className={classes.listIcon}>
             <Mail />
@@ -269,15 +280,6 @@ const Header = () => {
         </ListItem>
         <Divider />
         <ListItem style={{ justifyContent: "center" }}>
-          <IconButton className={classes.contactIcon} aria-label="github">
-            <a
-              href="https://github.com/berabulut/kapsule"
-              target="_blank"
-              rel="noopener"
-            >
-              <GitHub style={{ fontSize: "1.75rem" }} />
-            </a>
-          </IconButton>
           <IconButton className={classes.contactIcon} aria-label="twitter">
             <a
               href="https://twitter.com/berabulut"
@@ -285,6 +287,15 @@ const Header = () => {
               rel="noopener"
             >
               <Twitter style={{ fontSize: "1.75rem" }} />
+            </a>
+          </IconButton>
+          <IconButton className={classes.contactIcon} aria-label="github">
+            <a
+              href="https://github.com/berabulut/kapsule"
+              target="_blank"
+              rel="noopener"
+            >
+              <GitHub style={{ fontSize: "1.75rem" }} />
             </a>
           </IconButton>
         </ListItem>

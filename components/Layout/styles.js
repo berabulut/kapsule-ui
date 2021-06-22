@@ -38,6 +38,9 @@ export const footerStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       justifyContent: "space-evenly",
     },
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "8px",
+    },
   },
   icon: {
     color: "#808080",
@@ -45,6 +48,9 @@ export const footerStyles = makeStyles((theme) => ({
     transition: "color 0.3s",
     "&:hover": {
       color: "#00ADB5",
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginRight: "0px",
     },
   },
 }));
