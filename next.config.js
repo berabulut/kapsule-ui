@@ -12,7 +12,7 @@ module.exports = {
   env: {
     prod: PROD,
     apiURL: PROD === "true" ? "/api" : "http://localhost:8080", //,
-    serverApiUrl: PROD === "true" ? "http://service:8080" : "http://localhost:8080",
+    serverApiUrl: PROD === "true" ? "http://kapsule-api:8080" : "http://localhost:8080",
     redirectingURL: PROD === "true" ? "s" : "http://localhost:8081", //
   },
 };
