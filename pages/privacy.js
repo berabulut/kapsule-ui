@@ -23,7 +23,15 @@ const Privacy = () => {
         </li>
         <li>
           If you have any <strong>questions</strong> contact us at{" "}
-          <strong>kapsule.click@gmail.com</strong>
+          <strong>
+            {" "}
+            <a
+              href="mailto:kapsule.click@gmail.com"
+              style={{ color: "#00ADB5" }}
+            >
+              kapsule.click@gmail.com
+            </a>
+          </strong>
         </li>
       </ol>
 
@@ -281,30 +289,29 @@ const Privacy = () => {
         If you are a resident in the EEA or UK and you believe we are unlawfully
         processing your personal information, you also have the right to
         complain to your local data protection supervisory authority. You can
-        find their contact details here:
+        find their contact details{" "}
         <a
           style={{ color: "#00ADB5" }}
           target="_blank"
           rel="noopener"
           href="http://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm"
         >
-          http://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm
-        </a>{" "}
+          here
+        </a>
         .
       </p>
 
       <p>
         If you are a resident in Switzerland, the contact details for the data
-        protection authorities are available here:
-        https://www.edoeb.admin.ch/edoeb/en/home.html.
+        protection authorities are available{" "}
         <a
           style={{ color: "#00ADB5" }}
           target="_blank"
           rel="noopener"
           href="https://www.edoeb.admin.ch/edoeb/en/home.html"
         >
-          https://www.edoeb.admin.ch/edoeb/en/home.html
-        </a>{" "}
+          here
+        </a>
         .
       </p>
 
@@ -314,15 +321,15 @@ const Privacy = () => {
         browser to remove cookies and to reject cookies. If you choose to remove
         cookies or reject cookies, this could affect certain features or
         services of our Website. To opt-out of interest-based advertising by
-        advertisers on our Website visit
+        advertisers on our Website{" "}
         <a
           style={{ color: "#00ADB5" }}
           target="_blank"
           rel="noopener"
           href="http://www.aboutads.info/choices/"
         >
-          http://www.aboutads.info/choices/
-        </a>{" "}
+          visit
+        </a>
         .
       </p>
 
@@ -395,8 +402,10 @@ const Privacy = () => {
       <h2>11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE? </h2>
 
       <p id="contact">
-        If you have questions or comments about this notice, you may email us at
-        kapsule.click@gmail.com
+        If you have questions or comments about this notice, you may email us at{" "}
+        <a href="mailto:kapsule.click@gmail.com" style={{ color: "#00ADB5" }}>
+          kapsule.click@gmail.com
+        </a>
       </p>
 
       <h2>
