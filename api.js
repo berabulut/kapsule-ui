@@ -4,13 +4,15 @@ export const shortenURL = async (url, options) => {
       url: url,
       options_enabled: options.checked,
       duration: options.duration,
-      message: options.message
+      message: options.message,
     }),
     headers: {
       "Content-Type": "application/json",
     },
     method: "POST",
   });
+
+  if (res.status === 400) return res.json();
 
   if (!res.ok) return { error: res.status, text: res.statusText };
 

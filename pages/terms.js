@@ -18,7 +18,15 @@ const Terms = () => {
         </li>
         <li>
           If you have any <strong>questions</strong> contact us at{" "}
-          <strong>kapsule.click@gmail.com</strong>
+          <strong>
+            {" "}
+            <a
+              href="mailto:kapsule.click@gmail.com"
+              style={{ color: "#00ADB5" }}
+            >
+              kapsule.click@gmail.com
+            </a>
+          </strong>
         </li>
       </ol>
 

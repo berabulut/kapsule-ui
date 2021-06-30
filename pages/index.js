@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function isValidHttpUrl(string) {
+const isValidHttpUrl = (string) => {
   let url;
 
   try {
@@ -141,13 +141,14 @@ function isValidHttpUrl(string) {
   }
 
   return url.protocol === "http:" || url.protocol === "https:";
-}
+};
 
 const Home = ({ t, links }) => {
   const classes = useStyles();
   const [userInput, setUserInput] = useState("");
   const [response, setResponse] = useState("resp");
   const [buttonText, setButtonText] = useState("Shorten");
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [records, setRecords] = useState([]);
   const [openError, setOpenError] = useState(false);
   const [alert, setAlert] = useState({});
@@ -166,20 +167,37 @@ const Home = ({ t, links }) => {
       return;
     }
 
+    // check if input field same with link we've just generated
     if (response === userInput) {
       navigator.clipboard.writeText(response);
       setButtonText("Copied");
       return;
     }
 
-    if (!isValidHttpUrl(userInput)) {
+    // this statement will add https as prefix if a protocol doesn't exist
+    let url = userInput;
+    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+      url = "https://" + userInput;
+    }
+
+    if (!isValidHttpUrl(url)) {
       setAlert({ type: "warning", text: "Please provide a valid URL" });
       setOpenError(true);
       return;
     }
 
-    const res = await shortenURL(userInput, options);
+    setButtonDisabled(true);
+    const res = await shortenURL(url, options);
+    setButtonDisabled(false);
 
+    // if url sent to be shortened not valid 
+    if (res?.status) {
+      setAlert({ type: "error", text: res.status });
+      setOpenError(true);
+      return;
+    }
+
+    // if something else went wrong 
     if (res?.error) {
       setAlert({ type: "error", text: res.error + " " + res.text });
       setOpenError(true);
@@ -188,7 +206,7 @@ const Home = ({ t, links }) => {
 
     const link = {
       Key: res.id,
-      Value: userInput,
+      Value: url,
       Clicks: 0,
       CreatedAt: new Date().getTime(),
       Title: res.title,
@@ -280,8 +298,9 @@ const Home = ({ t, links }) => {
             className={classes.input}
           />
           <button
+            disabled={buttonDisabled}
             className={classes.button}
-            style={{ backgroundColor: buttonText === "Copied" && "#00D1DB" }}
+            style={{ backgroundColor: buttonDisabled ? "#808080" : buttonText === "Copied" && "#00D1DB" }}
             onClick={buttonClick}
           >
             {buttonText}
