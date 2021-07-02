@@ -28,8 +28,9 @@ function MyApp({ Component, pageProps }) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
-        <title>Kapsule</title>
+        <title>Kapsule - URL Shortener</title>
         <link rel="shortcut icon" href="/static/icons/logo.ico" />
+        <meta name="description" content="Shorten your URLs and track their performance with some statistics." />
       </Head>
       <ThemeProvider theme={theme}>
         <header>
