@@ -30,7 +30,13 @@ function MyApp({ Component, pageProps }) {
         />
         <title>Kapsule - URL Shortener</title>
         <link rel="shortcut icon" href="/static/icons/logo.ico" />
+        <meta name="title" content="Kapsule - URL Shortener" />
         <meta name="description" content="Shorten your URLs and track their performance with some statistics." />
+        <meta property="og:title" content="Kapsule - URL Shortener" />
+        <meta property="og:url" content="http://kapsule.click/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="Shorten your URLs and track their performance with some statistics." />
+        <meta property="og:image" content="https://github.com/berabulut/kapsule-ui/blob/main/public/static/icons/kapsule.png?raw=true" />
       </Head>
       <ThemeProvider theme={theme}>
         <header>

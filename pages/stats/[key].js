@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { getStats } from "api";
 import {
   Typography,
@@ -9,7 +8,7 @@ import {
   Paper,
   Popper,
 } from "@material-ui/core";
-import { HelpOutline, RemoveCircleRounded } from "@material-ui/icons";
+import { HelpOutline } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import ClicksChart from "@./components/ClicksChart";
 import PieChart from "@./components/PieChart";
@@ -155,7 +154,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Stats = ({ record }) => {
   const classes = useStyles();
-  const router = useRouter();
 
   const [clicksChartData, setClicksChartData] = useState();
   const [devicesChartData, setDevicesChartData] = useState([]);
