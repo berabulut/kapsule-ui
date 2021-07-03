@@ -1,4 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+<h1>kapsule-ui</h1>
+
+<div align="center">
+  <img src="https://github.com/berabulut/kapsule/blob/main/web/static/logo.png?raw=true" alt="kapsule" />
+  <h3>
+    <a href="https://kapsule.click/">
+      Live
+    </a>
+    <span> | </span>
+    <a href="https://github.com/berabulut/kapsule">
+      kapsule
+     </a>
+    <span> | </span>
+    <a href="https://github.com/berabulut/kapsule-server">
+      kapsule-server
+    </a>
+  </h3><br>
+    Client-side project of 
+      <a href="https://github.com/berabulut/kapsule" rel="noopener noreferrer" target="_blank">
+      kapsule
+    </a> 
+</div><br>
+
+## Home page
+![home](https://github.com/berabulut/images/blob/main/home.png?raw=true)
+
+## Stats page
+
+![history](https://github.com/berabulut/images/blob/main/stats1.png?raw=true)
+![home](https://github.com/berabulut/images/blob/main/stats2.png?raw=true)
+![home](https://github.com/berabulut/images/blob/main/stats3.png?raw=true)
+
 
 ## Getting Started
 
